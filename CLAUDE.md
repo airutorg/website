@@ -13,6 +13,8 @@ step required.
 public/                 - Published files (Cloudflare Pages root)
   index.html            - Landing page (centered logo, white background)
   logo.svg              - Airut logo
+scripts/                - Utility scripts (not published)
+  wait-for-preview      - Wait for Cloudflare Pages preview URL
 CLAUDE.md               - This file (not published)
 .airut/                 - Airut configuration (not published)
 ```
@@ -52,10 +54,16 @@ git fetch origin && git checkout -b feature/descriptive-name origin/main
    ```bash
    git push -u origin HEAD && gh pr create --fill
    ```
-3. **Wait for GitHub CI (if configured):**
+3. **Wait for Cloudflare Pages preview (for website changes):**
+
+   If the PR includes changes to `public/`, wait for the Cloudflare Pages preview
+   URL and report it back to the user:
+
    ```bash
-   gh pr checks --watch
+   gh pr diff <PR_NUMBER> --name-only | grep -q "^public/" && scripts/wait-for-preview <PR_NUMBER>
    ```
+
+   **Always include the preview URL in your response when available.**
 4. Address review comments:
    ```bash
    gh pr view --comments
