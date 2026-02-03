@@ -3,7 +3,8 @@
 # Usage: scripts/wait-for-preview <PR_NUMBER>
 #
 # Polls for the Cloudflare Pages bot comment until a successful deployment
-# is found, then outputs the preview URL. Times out after 120 seconds.
+# is found for the current PR head commit, then outputs the preview URL.
+# Times out after 120 seconds.
 
 set -euo pipefail
 
@@ -19,17 +20,33 @@ INTERVAL=10
 
 echo "Waiting for Cloudflare Pages preview URL on PR #$PR_NUMBER..." >&2
 
+# Get the current head commit SHA for the PR
+head_sha=$(gh pr view "$PR_NUMBER" --json headRefOid --jq '.headRefOid')
+short_sha="${head_sha:0:7}"
+echo "  Expected commit: $short_sha" >&2
+
 start_time=$(date +%s)
 while true; do
-  preview_url=$(gh api "repos/:owner/:repo/issues/$PR_NUMBER/comments" --jq '
+  # Extract both commit and preview URL from successful deployments
+  result=$(gh api "repos/:owner/:repo/issues/$PR_NUMBER/comments" --jq '
     .[] | select(.user.login | startswith("cloudflare")) |
     select(.body | contains("Deploy successful")) |
-    .body | capture("Preview URL:</strong></td><td>\\n<a href=.(?<url>https://[^>]+).>") | .url
+    .body | {
+      commit: (capture("<code>(?<sha>[a-f0-9]+)</code>") | .sha),
+      url: (capture("Preview URL:</strong></td><td>\\n<a href=.(?<url>https://[^>]+).>") | .url)
+    } | "\(.commit) \(.url)"
   ' 2>/dev/null | tail -1)
 
-  if [[ -n "$preview_url" ]]; then
-    echo "$preview_url"
-    exit 0
+  if [[ -n "$result" ]]; then
+    comment_sha=$(echo "$result" | cut -d' ' -f1)
+    preview_url=$(echo "$result" | cut -d' ' -f2)
+
+    if [[ "$comment_sha" == "$short_sha" ]]; then
+      echo "$preview_url"
+      exit 0
+    else
+      echo "  Found deployment for $comment_sha, waiting for $short_sha..." >&2
+    fi
   fi
 
   elapsed=$(($(date +%s) - start_time))
