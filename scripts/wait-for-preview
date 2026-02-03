@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Wait for Cloudflare Pages preview URL on a PR
+# Usage: scripts/wait-for-preview <PR_NUMBER>
+#
+# Polls for the Cloudflare Pages bot comment until a successful deployment
+# is found, then outputs the preview URL. Times out after 120 seconds.
+
+set -euo pipefail
+
+PR_NUMBER="${1:-}"
+
+if [[ -z "$PR_NUMBER" ]]; then
+  echo "Usage: scripts/wait-for-preview <PR_NUMBER>" >&2
+  exit 1
+fi
+
+MAX_WAIT=120
+INTERVAL=10
+
+echo "Waiting for Cloudflare Pages preview URL on PR #$PR_NUMBER..." >&2
+
+start_time=$(date +%s)
+while true; do
+  preview_url=$(gh api "repos/:owner/:repo/issues/$PR_NUMBER/comments" --jq '
+    .[] | select(.user.login | startswith("cloudflare")) |
+    select(.body | contains("Deploy successful")) |
+    .body | capture("Preview URL:</strong></td><td>\\n<a href=.(?<url>https://[^>]+).>") | .url
+  ' 2>/dev/null | tail -1)
+
+  if [[ -n "$preview_url" ]]; then
+    echo "$preview_url"
+    exit 0
+  fi
+
+  elapsed=$(($(date +%s) - start_time))
+  if [[ $elapsed -ge $MAX_WAIT ]]; then
+    echo "Timeout waiting for preview URL after ${MAX_WAIT}s" >&2
+    exit 1
+  fi
+
+  echo "  Still waiting... (${elapsed}s elapsed)" >&2
+  sleep "$INTERVAL"
+done
