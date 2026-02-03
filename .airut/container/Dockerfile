@@ -24,6 +24,9 @@ RUN mkdir /tmp/claude-install && cd /tmp/claude-install \
     && curl -fsSL https://claude.ai/install.sh | bash \
     && rm -rf /tmp/claude-install
 
+# Ensure claude is in PATH
+ENV PATH="/root/.local/bin:$PATH"
+
 # Configure git with gh credential helper
 # NOTE: Using COPY instead of heredoc because Podman's image builder
 # incorrectly interprets lines starting with '[' as Dockerfile instructions
