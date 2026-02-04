@@ -235,7 +235,7 @@
 <body>
     <div class="container">
         <header class="thread-header">
-            <h1 class="thread-subject">Subject: ops dashboard - adding expense report</h1>
+            <h1 class="thread-subject">Subject: ops dashboard - adding bean inventory</h1>
         </header>
 
         <main class="message-list">
@@ -252,11 +252,11 @@
                     </div>
                 </header>
                 <div class="message-content">
-                    <p>hi, Maya set this up and said you could help automate stuff? I've been doing this monthly expense report manually and its kind of tedious</p>
+                    <p>hi, Maya set this up and said you could help automate stuff? I've been doing this weekly bean inventory report manually and its kind of tedious</p>
                     <p>can you add it to the ops dashboard so it just updates automatically</p>
                     <div class="attachment">
                         <svg class="attachment-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM9.5 3A1.5 1.5 0 0 1 8 1.5V0H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5H9.5z"/></svg>
-                        expense_report_jan2025_FINAL_v2.xlsx
+                        bean_inventory_jan2025_FINAL_v2.xlsx
                     </div>
                 </div>
             </article>
@@ -277,12 +277,12 @@
                 </header>
                 <div class="message-content">
                     <p>I've analyzed your spreadsheet and added the report to the ops dashboard. Here's what I found and built:</p>
-                    <p>Your report pulls transaction data from the <code>accounting.expenses</code> table, groups by department and category, and calculates MTD vs budget variance. I've replicated this logic and added a new "Monthly Expenses" panel to the Operations dashboard.</p>
+                    <p>Your report pulls stock data from the <code>inventory.bean_stock</code> table, groups by location and roast type, and calculates weekly burn rate with reorder alerts. I've replicated this logic and added a new "Bean Inventory" panel to the Operations dashboard.</p>
                     <p><strong>Changes:</strong></p>
                     <ul>
-                        <li>Created <code>src/reports/monthly-expenses.ts</code> with the aggregation query</li>
-                        <li>Added expense breakdown chart and variance table to the dashboard</li>
-                        <li>Set up auto-refresh on the 1st of each month</li>
+                        <li>Created <code>src/reports/bean-inventory.ts</code> with the aggregation query</li>
+                        <li>Added stock level chart and reorder alerts table to the dashboard</li>
+                        <li>Set up auto-refresh every Monday at 6am</li>
                     </ul>
                     <p>Preview: dev.tuscanrose.io/ops/dashboard</p>
                     <p>PR: github.com/tuscanrose/internal-tools/pull/892</p>
@@ -304,7 +304,7 @@
                 </header>
                 <div class="message-content">
                     <p>oh wow that was fast lol</p>
-                    <p>looks good! one thing - can you also send me the csv export of the data? I need to attach it to an email to finance every month</p>
+                    <p>looks good! one thing - can you also send me the csv export of the data? I need to forward it to our roaster every week</p>
                 </div>
             </article>
 
@@ -326,7 +326,7 @@
                     <p>Here's the CSV export for this month. I've also added an "Export CSV" button to the dashboard panel so you can download it anytime.</p>
                     <div class="attachment">
                         <svg class="attachment-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM9.5 3A1.5 1.5 0 0 1 8 1.5V0H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5H9.5z"/></svg>
-                        expenses_2025-01.csv
+                        bean_inventory_2025-01-13.csv
                     </div>
                 </div>
             </article>
@@ -364,7 +364,7 @@
                     </div>
                 </header>
                 <div class="message-content">
-                    <p>Merged and deployed! The expenses panel is now live on the ops dashboard.</p>
+                    <p>Merged and deployed! The bean inventory panel is now live on the ops dashboard.</p>
                     <p>To answer your question: Airut is an open-source project that enables safe execution of agentic coding workflows over email. You describe what you need, I figure out the implementation, create a PR for review, and merge when you approve. You can check out the project at <a href="https://github.com/airutorg/airut">github.com/airutorg/airut</a>.</p>
                     <p>If you are interested in deploying Airut commercially, you can reach out to <a href="https://linkedin.com/in/pyryhaulos">Pyry</a> who built it.</p>
                 </div>
