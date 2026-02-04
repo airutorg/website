@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     ripgrep \
     imagemagick \
     librsvg2-bin \
+    jq \
     && rm -rf /var/lib/apt/lists/*
 
 # Install GitHub CLI

@@ -21,6 +21,12 @@ domains:
   - statsig.anthropic.com
   - sentry.io
 
+  # Cloudflare Pages previews (for verifying PR deployments)
+  - "*.website-2jm.pages.dev"
+
+  # Production site
+  - airut.org
+
 # URL patterns: domain + path pattern required (fnmatch wildcards supported)
 url_prefixes:
   # GitHub - restricted to airutorg/website repository
