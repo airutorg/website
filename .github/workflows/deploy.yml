@@ -12,6 +12,7 @@ jobs:
     permissions:
       contents: read
       deployments: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
@@ -27,3 +28,37 @@ jobs:
         run: |
           echo "### Deployment URL" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.deploy.outputs.deployment-url }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = '${{ steps.deploy.outputs.deployment-url }}';
+            const body = `## Cloudflare Pages Deployment\n\n🚀 Preview: ${url}`;
+
+            // Find existing bot comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const botComment = comments.find(c =>
+              c.user.type === 'Bot' && c.body.includes('Cloudflare Pages Deployment')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
