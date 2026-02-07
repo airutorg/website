@@ -22,7 +22,7 @@ domains:
   - sentry.io
 
   # Cloudflare Pages previews (for verifying PR deployments)
-  - "*.website-2jm.pages.dev"
+  - "*.airut-website.pages.dev"
 
   # Production site
   - airut.org
