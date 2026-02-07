@@ -1,0 +1,24 @@
+# Repo-specific Airut configuration for airut.org website.
+#
+# Loaded from the git mirror (main branch) at the start of each task.
+# Changes take effect after merge to main without server restart.
+
+# Default Claude model when the sender does not specify one via
+# subaddressing (e.g. airut+sonnet@example.com).
+default_model: opus
+
+# Maximum time in seconds a Claude container may run before being killed.
+timeout: 3600
+
+network:
+  # Enable the network sandbox (default: true).
+  sandbox_enabled: true
+
+# Environment variables passed into every Claude Code container.
+container_env:
+  # Claude authentication (optional; OAuth token takes precedence if both set).
+  CLAUDE_CODE_OAUTH_TOKEN: !secret? CLAUDE_CODE_OAUTH_TOKEN
+  ANTHROPIC_API_KEY: !secret? ANTHROPIC_API_KEY
+
+  # GitHub token for git operations inside the container.
+  GH_TOKEN: !secret GH_TOKEN

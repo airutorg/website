@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airut - Claude Code over email</title>
+    <meta name="description" content="Send an email, receive a PR. Airut runs Claude Code in isolated containers with comprehensive sandboxing.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://airut.org/">
+    <meta property="og:title" content="Airut - Claude Code over email">
+    <meta property="og:description" content="Send an email, receive a PR. Airut runs Claude Code in isolated containers with comprehensive sandboxing.">
+    <meta property="og:image" content="https://airut.org/logo-white-bg.png">
+
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://airut.org/">
+    <meta property="twitter:title" content="Airut - Claude Code over email">
+    <meta property="twitter:description" content="Send an email, receive a PR. Airut runs Claude Code in isolated containers with comprehensive sandboxing.">
+    <meta property="twitter:image" content="https://airut.org/logo-white-bg.png">
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/svg+xml" href="/logo.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f6f8fa;
+            --border-color: #e1e4e8;
+            --text-primary: #1f2328;
+            --text-secondary: #656d76;
+            --accent-color: #0969da;
+            --user-color: #8250df;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 540px;
+            margin: 0 auto;
+            background-color: var(--bg-primary);
+            min-height: 100vh;
+        }
+
+        @media (min-width: 540px) {
+            body {
+                padding: 2rem 1rem;
+            }
+
+            .container {
+                min-height: auto;
+                border-radius: 12px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+            }
+        }
+
+        /* Header */
+        .thread-header {
+            padding: 1.25rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .thread-subject {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Message list */
+        .message-list {
+            padding: 0;
+        }
+
+        /* Individual message */
+        .message {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .message:last-child {
+            border-bottom: none;
+            padding-bottom: 2rem;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Avatar */
+        .avatar {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: white;
+        }
+
+        .avatar-airut {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 0.125rem;
+        }
+
+        .avatar-airut img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .avatar-user {
+            background: var(--user-color);
+        }
+
+        /* Message header info */
+        .message-meta {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .message-top-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.375rem;
+            flex-wrap: wrap;
+        }
+
+        .sender-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        .sender-email {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .message-date {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+
+        /* Message body */
+        .message-content {
+            font-size: 0.9375rem;
+            line-height: 1.65;
+            color: var(--text-primary);
+        }
+
+        .message-content p {
+            margin-bottom: 0.875rem;
+        }
+
+        .message-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .message-content ul,
+        .message-content ol {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .message-content li {
+            margin-bottom: 0.375rem;
+        }
+
+        .message-content a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .message-content a:hover {
+            text-decoration: underline;
+        }
+
+        .message-content code {
+            background-color: var(--bg-secondary);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            font-size: 0.8125rem;
+        }
+
+        /* Attachment */
+        .attachment {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8125rem;
+            color: var(--text-primary);
+            margin-top: 0.5rem;
+        }
+
+        .attachment-icon {
+            width: 1rem;
+            height: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 540px) {
+            .message-date {
+                display: block;
+                width: 100%;
+                margin-left: 0;
+                margin-top: 0.125rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="thread-header">
+            <h1 class="thread-subject">Subject: ops dashboard - adding bean inventory</h1>
+        </header>
+
+        <main class="message-list">
+            <!-- Message 1: User request -->
+            <article class="message">
+                <header class="message-header">
+                    <div class="avatar avatar-user">T</div>
+                    <div class="message-meta">
+                        <div class="message-top-row">
+                            <span class="sender-name">Tomas</span>
+                            <span class="sender-email">&lt;tomas@tuscanrose.io&gt;</span>
+                            <span class="message-date">Jan 15, 10:23 AM</span>
+                        </div>
+                    </div>
+                </header>
+                <div class="message-content">
+                    <p>hi, Maya set this up and said you could help automate stuff? I've been doing this weekly bean inventory report manually and its kind of tedious</p>
+                    <p>can you add it to the ops dashboard so it just updates automatically</p>
+                    <div class="attachment">
+                        <svg class="attachment-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM9.5 3A1.5 1.5 0 0 1 8 1.5V0H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5H9.5z"/></svg>
+                        bean_inventory_jan2025_FINAL_v2.xlsx
+                    </div>
+                </div>
+            </article>
+
+            <!-- Message 2: Airut first implementation -->
+            <article class="message">
+                <header class="message-header">
+                    <div class="avatar avatar-airut">
+                        <img src="/logo.svg" alt="Airut">
+                    </div>
+                    <div class="message-meta">
+                        <div class="message-top-row">
+                            <span class="sender-name">Airut</span>
+                            <span class="sender-email">&lt;airut@tuscanrose.io&gt;</span>
+                            <span class="message-date">Jan 15, 10:31 AM</span>
+                        </div>
+                    </div>
+                </header>
+                <div class="message-content">
+                    <p>I've analyzed your spreadsheet and added the report to the ops dashboard. Here's what I found and built:</p>
+                    <p>Your report pulls stock data from the <code>inventory.bean_stock</code> table, groups by location and roast type, and calculates weekly burn rate with reorder alerts. I've replicated this logic and added a new "Bean Inventory" panel to the Operations dashboard.</p>
+                    <p><strong>Changes:</strong></p>
+                    <ul>
+                        <li>Created <code>src/reports/bean-inventory.ts</code> with the aggregation query</li>
+                        <li>Added stock level chart and reorder alerts table to the dashboard</li>
+                        <li>Set up auto-refresh every Monday at 6am</li>
+                    </ul>
+                    <p>Preview: dev.tuscanrose.io/ops/dashboard</p>
+                    <p>PR: github.com/tuscanrose/internal-tools/pull/892</p>
+                    <p>Let me know if anything looks off or needs adjusting.</p>
+                </div>
+            </article>
+
+            <!-- Message 3: User feedback -->
+            <article class="message">
+                <header class="message-header">
+                    <div class="avatar avatar-user">T</div>
+                    <div class="message-meta">
+                        <div class="message-top-row">
+                            <span class="sender-name">Tomas</span>
+                            <span class="sender-email">&lt;tomas@tuscanrose.io&gt;</span>
+                            <span class="message-date">Jan 15, 10:47 AM</span>
+                        </div>
+                    </div>
+                </header>
+                <div class="message-content">
+                    <p>oh wow that was fast lol</p>
+                    <p>looks good! one thing - can you also send me the csv export of the data? I need to forward it to our roaster every week</p>
+                </div>
+            </article>
+
+            <!-- Message 4: Airut update -->
+            <article class="message">
+                <header class="message-header">
+                    <div class="avatar avatar-airut">
+                        <img src="/logo.svg" alt="Airut">
+                    </div>
+                    <div class="message-meta">
+                        <div class="message-top-row">
+                            <span class="sender-name">Airut</span>
+                            <span class="sender-email">&lt;airut@tuscanrose.io&gt;</span>
+                            <span class="message-date">Jan 15, 10:49 AM</span>
+                        </div>
+                    </div>
+                </header>
+                <div class="message-content">
+                    <p>Here's the CSV export for this month. I've also added an "Export CSV" button to the dashboard panel so you can download it anytime.</p>
+                    <div class="attachment">
+                        <svg class="attachment-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM9.5 3A1.5 1.5 0 0 1 8 1.5V0H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5H9.5z"/></svg>
+                        bean_inventory_2025-01-13.csv
+                    </div>
+                </div>
+            </article>
+
+            <!-- Message 5: User approval -->
+            <article class="message">
+                <header class="message-header">
+                    <div class="avatar avatar-user">T</div>
+                    <div class="message-meta">
+                        <div class="message-top-row">
+                            <span class="sender-name">Tomas</span>
+                            <span class="sender-email">&lt;tomas@tuscanrose.io&gt;</span>
+                            <span class="message-date">Jan 15, 11:02 AM</span>
+                        </div>
+                    </div>
+                </header>
+                <div class="message-content">
+                    <p>perfect, maya said pr is approved</p>
+                    <p>btw what even is airut? she just said to email this address and it would handle code stuff</p>
+                </div>
+            </article>
+
+            <!-- Message 6: Airut final response -->
+            <article class="message">
+                <header class="message-header">
+                    <div class="avatar avatar-airut">
+                        <img src="/logo.svg" alt="Airut">
+                    </div>
+                    <div class="message-meta">
+                        <div class="message-top-row">
+                            <span class="sender-name">Airut</span>
+                            <span class="sender-email">&lt;airut@tuscanrose.io&gt;</span>
+                            <span class="message-date">Jan 15, 11:04 AM</span>
+                        </div>
+                    </div>
+                </header>
+                <div class="message-content">
+                    <p>Merged and deployed! The bean inventory panel is now live on the ops dashboard.</p>
+                    <p>To answer your question: Airut is an open-source project that enables safe execution of agentic coding workflows over email. You describe what you need, I figure out the implementation, create a PR for review, and merge when you approve. You can check out the project at <a href="https://github.com/airutorg/airut">github.com/airutorg/airut</a>.</p>
+                    <p>If you are interested in deploying Airut commercially, you can reach out to <a href="https://linkedin.com/in/pyryhaulos">Pyry</a> who built it.</p>
+                </div>
+            </article>
+        </main>
+    </div>
+</body>
+</html>
