@@ -2,8 +2,8 @@
 # Wait for Cloudflare Pages preview URL on a PR
 # Usage: scripts/wait-for-preview <PR_NUMBER>
 #
-# Polls for the Cloudflare Pages bot comment until a successful deployment
-# is found for the current PR head commit, then outputs the preview URL.
+# Waits for the GitHub Actions deploy workflow to succeed, then extracts
+# the preview URL from the workflow's PR comment.
 # Times out after 120 seconds.
 
 set -euo pipefail
@@ -27,25 +27,34 @@ echo "  Expected commit: $short_sha" >&2
 
 start_time=$(date +%s)
 while true; do
-  # Extract both commit and preview URL from successful deployments
-  result=$(gh api "repos/:owner/:repo/issues/$PR_NUMBER/comments" --jq '
-    .[] | select(.user.login | startswith("cloudflare")) |
-    select(.body | contains("Deploy successful")) |
-    .body | {
-      commit: (capture("<code>(?<sha>[a-f0-9]+)</code>") | .sha),
-      url: (capture("Preview URL:</strong></td><td>\\n<a href=.(?<url>https://[^>]+).>") | .url)
-    } | "\(.commit) \(.url)"
-  ' 2>/dev/null | tail -1)
+  # Check if the deploy workflow has completed for this commit
+  run_status=$(gh api "repos/{owner}/{repo}/actions/runs?head_sha=$head_sha&event=pull_request" \
+    --jq '.workflow_runs[] | select(.name == "Deploy to Cloudflare Pages") | {status, conclusion}' 2>/dev/null | head -1)
 
-  if [[ -n "$result" ]]; then
-    comment_sha=$(echo "$result" | cut -d' ' -f1)
-    preview_url=$(echo "$result" | cut -d' ' -f2)
+  if [[ -n "$run_status" ]]; then
+    status=$(echo "$run_status" | jq -r '.status')
+    conclusion=$(echo "$run_status" | jq -r '.conclusion')
 
-    if [[ "$comment_sha" == "$short_sha" ]]; then
-      echo "$preview_url"
-      exit 0
+    if [[ "$status" == "completed" ]]; then
+      if [[ "$conclusion" == "success" ]]; then
+        # Workflow succeeded - get the preview URL from the PR comment
+        preview_url=$(gh api "repos/{owner}/{repo}/issues/$PR_NUMBER/comments" \
+          --jq '.[] | select(.user.login == "github-actions[bot]" or .user.type == "Bot") |
+                select(.body | contains("Cloudflare Pages Deployment")) |
+                .body | capture("Preview: (?<url>https://[^\\s]+)") | .url' 2>/dev/null | tail -1)
+
+        if [[ -n "$preview_url" ]]; then
+          echo "$preview_url"
+          exit 0
+        else
+          echo "  Workflow succeeded but no preview URL comment found yet..." >&2
+        fi
+      else
+        echo "Deploy workflow failed with conclusion: $conclusion" >&2
+        exit 1
+      fi
     else
-      echo "  Found deployment for $comment_sha, waiting for $short_sha..." >&2
+      echo "  Workflow status: $status..." >&2
     fi
   fi
 
