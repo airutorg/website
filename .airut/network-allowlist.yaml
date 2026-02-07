@@ -27,6 +27,10 @@ domains:
   # Production site
   - airut.org
 
+  # Cloudflare documentation
+  - developers.cloudflare.com
+  - blog.cloudflare.com
+
 # URL patterns: domain + path pattern required (fnmatch wildcards supported)
 url_prefixes:
   # GitHub - restricted to airutorg/website repository
