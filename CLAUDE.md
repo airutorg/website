@@ -11,8 +11,9 @@ step required.
 
 ```
 public/                 - Published files (Cloudflare Pages root)
-  index.html            - Landing page (centered logo, white background)
-  logo.svg              - Airut logo
+  index.html            - Landing page
+  assets/               - Logo and image assets
+  _redirects            - Cloudflare Pages redirect rules
 scripts/                - Utility scripts (not published)
   wait-for-preview      - Wait for Cloudflare Pages preview URL
 CLAUDE.md               - This file (not published)
