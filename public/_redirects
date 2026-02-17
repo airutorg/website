@@ -1,0 +1,2 @@
+# Redirect old logo path used in social share previews
+/logo-white-bg.png /assets/logo-white-bg.png 301
