@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     imagemagick \
     librsvg2-bin \
     jq \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install GitHub CLI
