@@ -187,6 +187,11 @@
             height: 100%;
         }
 
+        .avatar-airut .logo-dark { display: none; }
+
+        [data-theme="dark"] .avatar-airut .logo-light { display: none; }
+        [data-theme="dark"] .avatar-airut .logo-dark { display: block; }
+
         .avatar-user {
             background: var(--user-color);
         }
@@ -331,7 +336,8 @@
             <article class="message">
                 <header class="message-header">
                     <div class="avatar avatar-airut">
-                        <img src="/assets/logo.svg" alt="Airut">
+                        <img class="logo-light" src="/assets/logo.svg" alt="Airut">
+                        <img class="logo-dark" src="/assets/logo-dark.svg" alt="Airut">
                     </div>
                     <div class="message-meta">
                         <div class="message-top-row">
@@ -378,7 +384,8 @@
             <article class="message">
                 <header class="message-header">
                     <div class="avatar avatar-airut">
-                        <img src="/assets/logo.svg" alt="Airut">
+                        <img class="logo-light" src="/assets/logo.svg" alt="Airut">
+                        <img class="logo-dark" src="/assets/logo-dark.svg" alt="Airut">
                     </div>
                     <div class="message-meta">
                         <div class="message-top-row">
@@ -419,7 +426,8 @@
             <article class="message">
                 <header class="message-header">
                     <div class="avatar avatar-airut">
-                        <img src="/assets/logo.svg" alt="Airut">
+                        <img class="logo-light" src="/assets/logo.svg" alt="Airut">
+                        <img class="logo-dark" src="/assets/logo-dark.svg" alt="Airut">
                     </div>
                     <div class="message-meta">
                         <div class="message-top-row">
