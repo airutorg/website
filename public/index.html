@@ -139,7 +139,13 @@
             padding: 0.125rem;
         }
 
-        .avatar-airut img {
+        .avatar-airut img,
+        .avatar-airut picture {
+            width: 100%;
+            height: 100%;
+        }
+
+        .avatar-airut picture img {
             width: 100%;
             height: 100%;
         }
@@ -284,7 +290,10 @@
             <article class="message">
                 <header class="message-header">
                     <div class="avatar avatar-airut">
-                        <img src="/assets/logo.svg" alt="Airut">
+                        <picture>
+                            <source srcset="/assets/logo-dark.svg" media="(prefers-color-scheme: dark)">
+                            <img src="/assets/logo.svg" alt="Airut">
+                        </picture>
                     </div>
                     <div class="message-meta">
                         <div class="message-top-row">
@@ -331,7 +340,10 @@
             <article class="message">
                 <header class="message-header">
                     <div class="avatar avatar-airut">
-                        <img src="/assets/logo.svg" alt="Airut">
+                        <picture>
+                            <source srcset="/assets/logo-dark.svg" media="(prefers-color-scheme: dark)">
+                            <img src="/assets/logo.svg" alt="Airut">
+                        </picture>
                     </div>
                     <div class="message-meta">
                         <div class="message-top-row">
@@ -372,7 +384,10 @@
             <article class="message">
                 <header class="message-header">
                     <div class="avatar avatar-airut">
-                        <img src="/assets/logo.svg" alt="Airut">
+                        <picture>
+                            <source srcset="/assets/logo-dark.svg" media="(prefers-color-scheme: dark)">
+                            <img src="/assets/logo.svg" alt="Airut">
+                        </picture>
                     </div>
                     <div class="message-meta">
                         <div class="message-top-row">
