@@ -1,30 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<script>
-    // Apply theme immediately to prevent flash
-    (function() {
-        var saved = localStorage.getItem('theme');
-        if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        }
-    })();
-</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airut - Claude Code over email and Slack</title>
-    <meta name="description" content="Send a message, receive a PR. Airut runs Claude Code in isolated containers with comprehensive sandboxing.">
+    <title>Airut - Sandboxed Claude Code over email and Slack</title>
+    <meta name="description" content="Sandboxed Claude Code over email and Slack. Send a message, review a PR, merge to deploy. Self-hosted, open source, defense-in-depth sandboxing.">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://airut.org/">
-    <meta property="og:title" content="Airut - Claude Code over email and Slack">
-    <meta property="og:description" content="Send a message, receive a PR. Airut runs Claude Code in isolated containers with comprehensive sandboxing.">
+    <meta property="og:title" content="Airut - Sandboxed Claude Code over email and Slack">
+    <meta property="og:description" content="Sandboxed Claude Code over email and Slack. Send a message, review a PR, merge to deploy. Self-hosted, open source, defense-in-depth sandboxing.">
     <meta property="og:image" content="https://airut.org/assets/logo-white-bg.png">
 
     <meta property="twitter:card" content="summary">
     <meta property="twitter:url" content="https://airut.org/">
-    <meta property="twitter:title" content="Airut - Claude Code over email and Slack">
-    <meta property="twitter:description" content="Send a message, receive a PR. Airut runs Claude Code in isolated containers with comprehensive sandboxing.">
+    <meta property="twitter:title" content="Airut - Sandboxed Claude Code over email and Slack">
+    <meta property="twitter:description" content="Sandboxed Claude Code over email and Slack. Send a message, review a PR, merge to deploy. Self-hosted, open source, defense-in-depth sandboxing.">
     <meta property="twitter:image" content="https://airut.org/assets/logo-white-bg.png">
 
     <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -32,430 +23,519 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <style>
         :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f6f8fa;
-            --border-color: #e1e4e8;
-            --text-primary: #1f2328;
-            --text-secondary: #656d76;
-            --accent-color: #0969da;
-            --user-color: #8250df;
+            --bg-page: #f5f6f8;
+            --bg-surface: #ffffff;
+            --bg-code: #f0f2f5;
+            --bg-feature: #f8f9fb;
+            --border: #e0e3e8;
+            --border-light: #eceef2;
+            --text-primary: #1a1d23;
+            --text-secondary: #5a6170;
+            --text-tertiary: #8a8f9c;
+            --accent: #1a6bce;
+            --accent-subtle: #e8f0fc;
+            --code-text: #d63384;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
         }
 
-        [data-theme="dark"] {
-            --bg-primary: #161b22;
-            --bg-secondary: #0d1117;
-            --border-color: #30363d;
-            --text-primary: #e6edf3;
-            --text-secondary: #8b949e;
-            --accent-color: #58a6ff;
-            --user-color: #a371f7;
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #0e1117;
+                --bg-surface: #161b22;
+                --bg-code: #1c2129;
+                --bg-feature: #1c2129;
+                --border: #2d333b;
+                --border-light: #21262d;
+                --text-primary: #e2e6eb;
+                --text-secondary: #9198a1;
+                --text-tertiary: #6b7280;
+                --accent: #5b9cf5;
+                --accent-subtle: #1a2740;
+                --code-text: #f0839a;
+                --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+                --shadow-md: 0 2px 8px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.15);
+            }
         }
 
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body, .container, .message, .thread-header, .attachment, .message-content code {
-            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-        }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg-secondary);
+            background-color: var(--bg-page);
             color: var(--text-primary);
             line-height: 1.6;
-            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
+        /* ---- Layout ---- */
         .container {
-            max-width: 540px;
+            max-width: 720px;
             margin: 0 auto;
-            background-color: var(--bg-primary);
-            min-height: 100vh;
+            padding: 0 1.25rem;
         }
 
-        @media (min-width: 540px) {
-            body {
-                padding: 2rem 1rem;
-            }
-
-            .container {
-                min-height: auto;
-                border-radius: 12px;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
-            }
-
-            [data-theme="dark"] .container {
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2);
-            }
+        /* ---- Header / Hero ---- */
+        .hero {
+            padding: 4rem 0 3rem;
+            text-align: center;
         }
 
-        /* Header */
-        .thread-header {
-            padding: 1.25rem 1rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.75rem;
+        .hero-logo {
+            width: 160px;
+            height: auto;
+            margin-bottom: 1.5rem;
         }
 
-        .thread-subject {
+        .hero-logo-dark { display: none; }
+
+        @media (prefers-color-scheme: dark) {
+            .hero-logo-light { display: none; }
+            .hero-logo-dark { display: inline; }
+        }
+
+        .hero h1 {
             font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        /* Theme toggle */
-        .theme-toggle {
-            background: none;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 0.375rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: color 0.2s ease, border-color 0.2s ease;
-        }
-
-        .theme-toggle:hover {
-            color: var(--text-primary);
-            border-color: var(--text-secondary);
-        }
-
-        .theme-toggle svg {
-            width: 1.125rem;
-            height: 1.125rem;
-        }
-
-        .theme-toggle .icon-moon { display: block; }
-        .theme-toggle .icon-sun { display: none; }
-
-        [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
-        [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
-
-        /* Message list */
-        .message-list {
-            padding: 0;
-        }
-
-        /* Individual message */
-        .message {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .message:last-child {
-            border-bottom: none;
-            padding-bottom: 2rem;
-        }
-
-        .message-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Avatar */
-        .avatar {
-            width: 2.25rem;
-            height: 2.25rem;
-            border-radius: 50%;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             font-weight: 500;
-            font-size: 0.875rem;
-            color: white;
+            color: var(--text-secondary);
+            letter-spacing: -0.01em;
+            margin-bottom: 1.25rem;
         }
 
-        .avatar-airut {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            padding: 0.125rem;
+        .hero-tagline {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            max-width: 560px;
+            margin: 0 auto 1.25rem;
         }
 
-        .avatar-airut img {
-            width: 100%;
-            height: 100%;
+        .hero-description {
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto 2rem;
+            line-height: 1.65;
         }
 
-        .avatar-airut .logo-dark { display: none; }
-
-        [data-theme="dark"] .avatar-airut .logo-light { display: none; }
-        [data-theme="dark"] .avatar-airut .logo-dark { display: block; }
-
-        .avatar-user {
-            background: var(--user-color);
-        }
-
-        /* Message header info */
-        .message-meta {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .message-top-row {
+        .hero-links {
             display: flex;
-            align-items: baseline;
-            gap: 0.375rem;
+            gap: 1rem;
+            justify-content: center;
             flex-wrap: wrap;
         }
 
-        .sender-name {
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.875rem;
-        }
-
-        .sender-email {
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-        }
-
-        .message-date {
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            margin-left: auto;
-        }
-
-        /* Message body */
-        .message-content {
-            font-size: 0.9375rem;
-            line-height: 1.65;
-            color: var(--text-primary);
-        }
-
-        .message-content p {
-            margin-bottom: 0.875rem;
-        }
-
-        .message-content p:last-child {
-            margin-bottom: 0;
-        }
-
-        .message-content ul,
-        .message-content ol {
-            margin: 0.75rem 0;
-            padding-left: 1.5rem;
-        }
-
-        .message-content li {
-            margin-bottom: 0.375rem;
-        }
-
-        .message-content a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-
-        .message-content a:hover {
-            text-decoration: underline;
-        }
-
-        .message-content code {
-            background-color: var(--bg-secondary);
-            padding: 0.125rem 0.375rem;
-            border-radius: 4px;
-            font-family: 'SF Mono', Monaco, Consolas, monospace;
-            font-size: 0.8125rem;
-        }
-
-        /* Attachment */
-        .attachment {
+        .btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.8125rem;
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.15s, border-color 0.15s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #155bb5;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .btn-primary:hover {
+                background: #4a8be0;
+            }
+        }
+
+        .btn-secondary {
+            background: var(--bg-surface);
             color: var(--text-primary);
-            margin-top: 0.5rem;
+            border: 1px solid var(--border);
         }
 
-        .attachment-icon {
-            width: 1rem;
-            height: 1rem;
+        .btn-secondary:hover {
+            border-color: var(--text-tertiary);
+        }
+
+        .btn svg {
+            width: 1.125rem;
+            height: 1.125rem;
+            flex-shrink: 0;
+        }
+
+        /* ---- Workflow ---- */
+        .section {
+            padding: 2.5rem 0;
+        }
+
+        .section-label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .section h2 {
+            font-size: 1.375rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-intro {
             color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            max-width: 560px;
         }
 
-        /* Responsive */
-        @media (max-width: 540px) {
-            .message-date {
-                display: block;
-                width: 100%;
-                margin-left: 0;
-                margin-top: 0.125rem;
+        .workflow-steps {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 2.5rem 1fr;
+            gap: 0.875rem;
+            align-items: start;
+        }
+
+        .step-number {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: var(--accent-subtle);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            padding-top: 0.375rem;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 0.9375rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .step-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* ---- Features ---- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .feature {
+            background: var(--bg-feature);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+
+        .feature-icon {
+            width: 2rem;
+            height: 2rem;
+            margin-bottom: 0.75rem;
+            color: var(--accent);
+        }
+
+        .feature h3 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature p {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ---- Install ---- */
+        .install-block {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .install-header {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-tertiary);
+        }
+
+        .install-body {
+            padding: 1.25rem 1rem;
+        }
+
+        .install-body pre {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 0.875rem;
+            line-height: 1.7;
+            white-space: pre;
+            overflow-x: auto;
+            color: var(--text-primary);
+        }
+
+        .install-body .comment {
+            color: var(--text-tertiary);
+        }
+
+        .install-body .cmd {
+            color: var(--accent);
+        }
+
+        .prereqs {
+            margin-top: 1rem;
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .prereqs strong {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ---- Divider ---- */
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 0;
+        }
+
+        /* ---- Footer ---- */
+        .footer {
+            padding: 2.5rem 0 3rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-note {
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 600px) {
+            .hero {
+                padding: 3rem 0 2.5rem;
+            }
+
+            .hero-logo {
+                width: 128px;
+            }
+
+            .hero-tagline {
+                font-size: 1.375rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 2rem 0;
+            }
+
+            .section h2 {
+                font-size: 1.25rem;
+            }
+
+            .install-body pre {
+                font-size: 0.8125rem;
             }
         }
     </style>
 </head>
 <body>
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="container">
+            <img class="hero-logo hero-logo-light" src="/assets/logo.svg" alt="Airut" width="160" height="87">
+            <img class="hero-logo hero-logo-dark" src="/assets/logo-dark.svg" alt="Airut" width="160" height="87">
+            <h1>Sandboxed Claude Code over email and Slack</h1>
+            <p class="hero-tagline">Send a message, review a PR, merge to deploy</p>
+            <p class="hero-description">Airut is a self-hosted, open-source system that runs Claude Code tasks from your existing communication tools. It handles workspace provisioning, container isolation, network sandboxing, session persistence, and cleanup &mdash; a secure foundation for autonomous agentic development.</p>
+            <div class="hero-links">
+                <a href="https://github.com/airutorg/airut" class="btn btn-primary">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    View on GitHub
+                </a>
+                <a href="https://github.com/airutorg/airut/blob/main/doc/README.md" class="btn btn-secondary">
+                    Documentation
+                </a>
+            </div>
+        </div>
+    </header>
+
     <div class="container">
-        <header class="thread-header">
-            <h1 class="thread-subject">Subject: ops dashboard - adding bean inventory</h1>
-            <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-            </button>
-        </header>
+        <hr class="divider">
 
-        <main class="message-list">
-            <!-- Message 1: User request -->
-            <article class="message">
-                <header class="message-header">
-                    <div class="avatar avatar-user">T</div>
-                    <div class="message-meta">
-                        <div class="message-top-row">
-                            <span class="sender-name">Tomas</span>
-                            <span class="sender-email">&lt;tomas@tuscanrose.io&gt;</span>
-                            <span class="message-date">Jan 15, 10:23 AM</span>
-                        </div>
-                    </div>
-                </header>
-                <div class="message-content">
-                    <p>hi, Maya set this up and said you could help automate stuff? I've been doing this weekly bean inventory report manually and its kind of tedious</p>
-                    <p>can you add it to the ops dashboard so it just updates automatically</p>
-                    <div class="attachment">
-                        <svg class="attachment-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM9.5 3A1.5 1.5 0 0 1 8 1.5V0H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5H9.5z"/><path d="M4.5 6.5h2v1h-2zm0 2h2v1h-2zm0 2h2v1h-2zm3-4h2v1h-2zm0 2h2v1h-2zm0 2h2v1h-2z" fill-opacity="0.6"/></svg>
-                        bean_inventory_jan2025_FINAL_v2.xlsx
+        <!-- How it works -->
+        <section class="section">
+            <p class="section-label">How it works</p>
+            <h2>Message-to-deploy workflow</h2>
+            <p class="section-intro">Email and Slack provide threading, search, notifications, and mobile clients out of the box. No terminal sessions to maintain, no custom clients to install.</p>
+            <div class="workflow-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <p class="step-title">Send a message</p>
+                        <p class="step-desc">Describe your task in plain language over email or Slack. Airut provisions an isolated workspace, runs Claude Code, and delivers results back in the same thread.</p>
                     </div>
                 </div>
-            </article>
-
-            <!-- Message 2: Airut first implementation -->
-            <article class="message">
-                <header class="message-header">
-                    <div class="avatar avatar-airut">
-                        <img class="logo-light" src="/assets/logo.svg" alt="Airut">
-                        <img class="logo-dark" src="/assets/logo-dark.svg" alt="Airut">
-                    </div>
-                    <div class="message-meta">
-                        <div class="message-top-row">
-                            <span class="sender-name">Airut</span>
-                            <span class="sender-email">&lt;airut@tuscanrose.io&gt;</span>
-                            <span class="message-date">Jan 15, 10:31 AM</span>
-                        </div>
-                    </div>
-                </header>
-                <div class="message-content">
-                    <p>I've analyzed your spreadsheet and added the report to the ops dashboard. Here's what I found and built:</p>
-                    <p>Your report pulls stock data from the <code>inventory.bean_stock</code> table, groups by location and roast type, and calculates weekly burn rate with reorder alerts. I've replicated this logic and added a new "Bean Inventory" panel to the Operations dashboard.</p>
-                    <p><strong>Changes:</strong></p>
-                    <ul>
-                        <li>Created <code>src/reports/bean-inventory.ts</code> with the aggregation query</li>
-                        <li>Added stock level chart and reorder alerts table to the dashboard</li>
-                        <li>Set up auto-refresh every Monday at 6am</li>
-                    </ul>
-                    <p>Preview: dev.tuscanrose.io/ops/dashboard</p>
-                    <p>PR: github.com/tuscanrose/internal-tools/pull/892</p>
-                    <p>Let me know if anything looks off or needs adjusting.</p>
-                </div>
-            </article>
-
-            <!-- Message 3: User feedback -->
-            <article class="message">
-                <header class="message-header">
-                    <div class="avatar avatar-user">T</div>
-                    <div class="message-meta">
-                        <div class="message-top-row">
-                            <span class="sender-name">Tomas</span>
-                            <span class="sender-email">&lt;tomas@tuscanrose.io&gt;</span>
-                            <span class="message-date">Jan 15, 10:47 AM</span>
-                        </div>
-                    </div>
-                </header>
-                <div class="message-content">
-                    <p>oh wow that was fast lol</p>
-                    <p>looks good! one thing - can you also send me the csv export of the data? I need to forward it to our roaster every week</p>
-                </div>
-            </article>
-
-            <!-- Message 4: Airut update -->
-            <article class="message">
-                <header class="message-header">
-                    <div class="avatar avatar-airut">
-                        <img class="logo-light" src="/assets/logo.svg" alt="Airut">
-                        <img class="logo-dark" src="/assets/logo-dark.svg" alt="Airut">
-                    </div>
-                    <div class="message-meta">
-                        <div class="message-top-row">
-                            <span class="sender-name">Airut</span>
-                            <span class="sender-email">&lt;airut@tuscanrose.io&gt;</span>
-                            <span class="message-date">Jan 15, 10:49 AM</span>
-                        </div>
-                    </div>
-                </header>
-                <div class="message-content">
-                    <p>Here's the CSV export for this month. I've also added an "Export CSV" button to the dashboard panel so you can download it anytime.</p>
-                    <div class="attachment">
-                        <svg class="attachment-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM9.5 3A1.5 1.5 0 0 1 8 1.5V0H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5H9.5z"/></svg>
-                        bean_inventory_2025-01-13.csv
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <p class="step-title">Review the pull request</p>
+                        <p class="step-desc">The agent pushes a PR when configured to do so. Review the changes, leave comments, and reply in the thread &mdash; the agent reads your feedback and iterates. Conversation context persists across messages.</p>
                     </div>
                 </div>
-            </article>
-
-            <!-- Message 5: User approval -->
-            <article class="message">
-                <header class="message-header">
-                    <div class="avatar avatar-user">T</div>
-                    <div class="message-meta">
-                        <div class="message-top-row">
-                            <span class="sender-name">Tomas</span>
-                            <span class="sender-email">&lt;tomas@tuscanrose.io&gt;</span>
-                            <span class="message-date">Jan 15, 11:02 AM</span>
-                        </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <p class="step-title">Merge and deploy</p>
+                        <p class="step-desc">Approve and merge when ready. With CI/CD in place, merging deploys automatically. Multiple conversations run in parallel, each with isolated workspaces, session state, and credentials.</p>
                     </div>
-                </header>
-                <div class="message-content">
-                    <p>perfect, maya said pr is approved</p>
-                    <p>btw what even is airut? she just said to email this address and it would handle code stuff</p>
                 </div>
-            </article>
+            </div>
+        </section>
 
-            <!-- Message 6: Airut final response -->
-            <article class="message">
-                <header class="message-header">
-                    <div class="avatar avatar-airut">
-                        <img class="logo-light" src="/assets/logo.svg" alt="Airut">
-                        <img class="logo-dark" src="/assets/logo-dark.svg" alt="Airut">
-                    </div>
-                    <div class="message-meta">
-                        <div class="message-top-row">
-                            <span class="sender-name">Airut</span>
-                            <span class="sender-email">&lt;airut@tuscanrose.io&gt;</span>
-                            <span class="message-date">Jan 15, 11:04 AM</span>
-                        </div>
-                    </div>
-                </header>
-                <div class="message-content">
-                    <p>Merged and deployed! The bean inventory panel is now live on the ops dashboard.</p>
-                    <p>To answer your question: Airut is an open-source project that enables safe execution of agentic coding workflows over email and Slack. You describe what you need, I figure out the implementation, create a PR for review, and merge when you approve. You can check out the project at <a href="https://github.com/airutorg/airut">github.com/airutorg/airut</a>.</p>
-                    <p>If you are interested in deploying Airut commercially, you can reach out to <a href="https://linkedin.com/in/pyryhaulos">Pyry</a> who built it.</p>
+        <hr class="divider">
+
+        <!-- Security & Features -->
+        <section class="section">
+            <p class="section-label">Security &amp; isolation</p>
+            <h2>Safe fully autonomous operation</h2>
+            <p class="section-intro">Agentic workflows require running Claude Code without interactive approval for each step. Airut's robust sandboxing approach and security model make this safe, containing execution even if the agent is compromised.</p>
+            <div class="features-grid">
+                <div class="feature">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    <h3>Container isolation</h3>
+                    <p>Each task runs in a dedicated rootless Podman container with its own filesystem and process space. Isolated execution enables safe fully permissive mode for end-to-end autonomous operation. Automatic teardown after completion.</p>
                 </div>
-            </article>
-        </main>
+                <div class="feature">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <h3>Network allowlisting</h3>
+                    <p>All traffic routes through a transparent proxy enforcing a per-repository allowlist with path and method-level rules. Even a compromised agent can only reach pre-approved hosts. Custom DNS prevents exfiltration. Allowlist changes require a merged PR.</p>
+                </div>
+                <div class="feature">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <h3>Surrogate credentials</h3>
+                    <p>Real credentials never enter the container &mdash; the agent receives format-preserving surrogates that the proxy swaps for real values only on scoped hosts. Even a compromised agent cannot exfiltrate usable credentials. For AWS, the proxy re-signs SigV4 requests transparently.</p>
+                </div>
+                <div class="feature">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+                    <h3>Channel authentication</h3>
+                    <p>Email channels use DMARC verification. Slack uses workspace membership. Only authorized senders can trigger tasks.</p>
+                </div>
+                <div class="feature">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/><line x1="12" y1="15" x2="12" y2="3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+                    <h3>Protected configuration</h3>
+                    <p>Network allowlists and container settings are read from the default branch, not the agent workspace. The agent can propose changes via PR, but they only take effect after human review and merge.</p>
+                </div>
+                <div class="feature">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 8h2m2 0h2m2 0h2"/><path d="M7 11h10"/></svg>
+                    <h3>Web dashboard</h3>
+                    <p>Monitor running tasks, view network activity logs, and track execution history through a built-in web interface.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Install -->
+        <section class="section">
+            <p class="section-label">Get started</p>
+            <h2>Install and deploy</h2>
+            <p class="section-intro">Self-hosted on your own Linux server. Claude Code sessions stay on your infrastructure.</p>
+            <div class="install-block">
+                <div class="install-header">Terminal</div>
+                <div class="install-body">
+                    <pre><span class="comment"># Install Airut</span>
+<span class="cmd">uv tool install airut</span>
+
+<span class="comment"># Generate configuration</span>
+<span class="cmd">airut init</span>
+
+<span class="comment"># Edit ~/.config/airut/airut.yaml with your</span>
+<span class="comment"># email or Slack credentials and repository settings</span>
+
+<span class="comment"># Validate and start the service</span>
+<span class="cmd">airut check</span>
+<span class="cmd">airut install-service</span></pre>
+                </div>
+            </div>
+            <p class="prereqs"><strong>Prerequisites:</strong> Linux, <a href="https://docs.astral.sh/uv/" style="color: var(--accent); text-decoration: none;">uv</a>, Git, and <a href="https://podman.io/" style="color: var(--accent); text-decoration: none;">Podman</a> (rootless). Per-repository setup requires a <code style="background: var(--bg-code); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.8125rem; font-family: 'SF Mono', Menlo, Consolas, monospace;">.airut/</code> directory with container and network allowlist configuration. See the <a href="https://github.com/airutorg/airut/blob/main/doc/README.md" style="color: var(--accent); text-decoration: none;">documentation</a> for full setup instructions.</p>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Footer -->
+        <footer class="footer">
+            <nav class="footer-links">
+                <a href="https://github.com/airutorg/airut">GitHub</a>
+                <a href="https://github.com/airutorg/airut/blob/main/doc/README.md">Docs</a>
+                <a href="https://github.com/airutorg/airut/blob/main/LICENSE">MIT License</a>
+                <a href="https://linkedin.com/in/pyryhaulos">Contact</a>
+            </nav>
+            <p class="footer-note">Created by Pyry Haulos</p>
+        </footer>
     </div>
-    <script>
-        document.querySelector('.theme-toggle').addEventListener('click', function() {
-            var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            if (isDark) {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-    </script>
+
 </body>
 </html>
