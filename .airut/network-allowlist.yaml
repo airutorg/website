@@ -49,9 +49,12 @@ url_prefixes:
   - host: results-receiver.actions.githubusercontent.com
     path: /rest/runs*
 
-  # Airut documentation - allows the agent to read docs from the airut repo
+  # Airut main repo - allows the agent to read docs, README, and repo content
+  # for use in building the landing page and other website content
   # Example: https://raw.githubusercontent.com/airutorg/airut/main/README.md
   - host: github.com
     path: /airutorg/airut*
+  - host: api.github.com
+    path: /repos/airutorg/airut*
   - host: raw.githubusercontent.com
     path: /airutorg/airut*
