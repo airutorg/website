@@ -1,0 +1,31 @@
+# Sandbox configuration for CI (airut-sandbox / sandbox-action).
+#
+# Used by the deploy workflow to publish to Cloudflare Pages inside the
+# sandbox. Loaded from the default branch (trusted).
+
+# Plain environment variables (non-sensitive).
+env:
+  CI: "true"
+
+# Pass host env vars that the workflow sets from vars/non-secret context.
+pass_env:
+  - CLOUDFLARE_ACCOUNT_ID
+  - CLOUDFLARE_PAGES_PROJECT
+  - DEPLOY_BRANCH
+  - GITHUB_EVENT_NAME
+  - PR_NUMBER
+
+# Masked secrets: surrogate tokens inside the container, real values
+# injected by the proxy only for matching outbound requests.
+masked_secrets:
+  CLOUDFLARE_API_TOKEN:
+    value: !env CLOUDFLARE_API_TOKEN
+    scopes: ["api.cloudflare.com"]
+    headers: ["Authorization"]
+
+  GH_TOKEN:
+    value: !env GH_TOKEN
+    scopes: ["api.github.com", "*.githubusercontent.com"]
+    headers: ["Authorization"]
+
+network_sandbox: true

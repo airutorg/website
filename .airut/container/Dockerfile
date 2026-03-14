@@ -21,6 +21,11 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
     && apt-get update \
     && apt-get install -y gh
 
+# Install Node.js (for npx wrangler in publish script)
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install Claude Code
 # NOTE: Run from a temp directory to work around OOM bug in installer when run
 # as root during container build (https://github.com/anthropics/claude-code/issues/22536)
