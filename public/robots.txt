@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /canary.txt
 
 Sitemap: https://airut.org/sitemap.xml
