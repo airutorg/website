@@ -55,3 +55,9 @@ url_prefixes:
     path: /airutorg/airut*
   - host: raw.githubusercontent.com
     path: /airutorg/airut*
+
+  # Sandbox action - allows the agent to read docs from the sandbox-action repo
+  - host: github.com
+    path: /airutorg/sandbox-action*
+  - host: raw.githubusercontent.com
+    path: /airutorg/sandbox-action*
