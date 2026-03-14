@@ -24,6 +24,12 @@ domains:
   # Cloudflare Pages previews (for verifying PR deployments)
   - "*.airut-website.pages.dev"
 
+  # Cloudflare API (for publishing to Cloudflare Pages)
+  - api.cloudflare.com
+
+  # npm registry (for npx wrangler)
+  - registry.npmjs.org
+
   # Production site
   - airut.org
 
