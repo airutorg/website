@@ -39,8 +39,9 @@ deploy_output=$(npx wrangler@3 pages deploy public \
 echo "$deploy_output" >&2
 
 # Extract deployment URL from wrangler output.
-# Wrangler prints a line like: "✨ Deployment complete! Take a peek over at https://..."
-deployment_url=$(echo "$deploy_output" | grep -oP 'https://[a-zA-Z0-9._-]+\.pages\.dev\b' | tail -1)
+# Wrangler prints the deployment-specific URL (commit hash based) first,
+# followed by the branch alias URL. Use head -1 to get the deployment URL.
+deployment_url=$(echo "$deploy_output" | grep -oP 'https://[a-zA-Z0-9._-]+\.pages\.dev\b' | head -1)
 
 if [[ -z "$deployment_url" ]]; then
   echo "Error: could not extract deployment URL from wrangler output" >&2
