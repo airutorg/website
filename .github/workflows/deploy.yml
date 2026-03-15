@@ -46,7 +46,7 @@ jobs:
       PR_NUMBER: ${{ github.event.pull_request.number }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: airutorg/sandbox-action@main
+      - uses: airutorg/sandbox-action@v0
         with:
           command: scripts/publish
           pr_sha: ${{ github.event.pull_request.head.sha }}
