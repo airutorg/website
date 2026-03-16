@@ -22,6 +22,7 @@ masked_secrets:
     value: !env CLOUDFLARE_API_TOKEN
     scopes: ["api.cloudflare.com"]
     headers: ["Authorization"]
+    allow_foreign_credentials: true  # Cloudflare Pages issues JWTs mid-flow
 
   GH_TOKEN:
     value: !env GH_TOKEN
