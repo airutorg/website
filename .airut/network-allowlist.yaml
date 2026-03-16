@@ -24,6 +24,9 @@ domains:
   # Cloudflare Pages previews (for verifying PR deployments)
   - "*.airut-website.pages.dev"
 
+  # Cloudflare API (for publishing to Cloudflare Pages)
+  - api.cloudflare.com
+
   # npm registry (for npx wrangler)
   - registry.npmjs.org
 
@@ -58,10 +61,6 @@ url_prefixes:
     path: /airutorg/airut*
   - host: raw.githubusercontent.com
     path: /airutorg/airut*
-
-  # Cloudflare API — scoped to our account to block exfiltration
-  - host: api.cloudflare.com
-    path: /client/v4/accounts/43c7adbc43dd167c62e9877b0d3ede1a/*
 
   # Sandbox action - allows the agent to read docs from the sandbox-action repo
   - host: github.com
