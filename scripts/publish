@@ -34,9 +34,14 @@ echo "Deploying public/ to Cloudflare Pages (branch: $DEPLOY_BRANCH)..." >&2
 
 deploy_output=$(npx wrangler@3 pages deploy public \
   --project-name="$CLOUDFLARE_PAGES_PROJECT" \
-  --branch="$DEPLOY_BRANCH" 2>&1)
+  --branch="$DEPLOY_BRANCH" 2>&1) || deploy_exit=$?
 
 echo "$deploy_output" >&2
+
+if [[ "${deploy_exit:-0}" -ne 0 ]]; then
+  echo "Error: wrangler deploy failed with exit code $deploy_exit" >&2
+  exit "$deploy_exit"
+fi
 
 # Extract deployment URL from wrangler output.
 # Wrangler prints the deployment-specific URL (commit hash based) first,
