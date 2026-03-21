@@ -23,38 +23,63 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <style>
         :root {
-            --bg-page: #f5f6f8;
+            /* ---- Core palette ---- */
+            --bg-page: #f0f2f6;
             --bg-surface: #ffffff;
-            --bg-code: #f0f2f5;
-            --bg-feature: #f8f9fb;
-            --border: #e0e3e8;
-            --border-light: #eceef2;
-            --text-primary: #1a1d23;
-            --text-secondary: #5a6170;
-            --text-tertiary: #8a8f9c;
-            --accent: #1a6bce;
-            --accent-subtle: #e8f0fc;
-            --code-text: #d63384;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-            --shadow-md: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --bg-code: #eaedf3;
+            --bg-feature: #f5f7fa;
+            --border: #d2d8e3;
+            --border-light: #e4e8ef;
+            --text-primary: #111826;
+            --text-secondary: #475569;
+            --text-tertiary: #7c879c;
+            --accent: #1b6b8a;
+            --accent-hover: #155a75;
+            --accent-subtle: #e0f0f7;
+            --code-text: #a63d6f;
+
+            /* ---- Status colors ---- */
+            --status-success: #1a7a45;
+            --status-success-subtle: #e2f5eb;
+            --status-warning: #a86b10;
+            --status-warning-subtle: #fdf3e0;
+            --status-error: #b83a3a;
+            --status-error-subtle: #fce8e8;
+            --status-info: #1b6b8a;
+            --status-info-subtle: #e0f0f7;
+
+            /* ---- Elevation ---- */
+            --shadow-sm: 0 1px 2px rgba(17,24,38,0.05);
+            --shadow-md: 0 2px 8px rgba(17,24,38,0.07), 0 1px 2px rgba(17,24,38,0.04);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-page: #0e1117;
-                --bg-surface: #161b22;
-                --bg-code: #1c2129;
-                --bg-feature: #1c2129;
-                --border: #2d333b;
-                --border-light: #21262d;
-                --text-primary: #e2e6eb;
-                --text-secondary: #9198a1;
-                --text-tertiary: #6b7280;
-                --accent: #5b9cf5;
-                --accent-subtle: #1a2740;
-                --code-text: #f0839a;
-                --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
-                --shadow-md: 0 2px 8px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.15);
+                --bg-page: #0a0f18;
+                --bg-surface: #111827;
+                --bg-code: #161d2e;
+                --bg-feature: #161d2e;
+                --border: #253046;
+                --border-light: #1c2538;
+                --text-primary: #dfe5ef;
+                --text-secondary: #8898b0;
+                --text-tertiary: #5a6a82;
+                --accent: #5cb8d6;
+                --accent-hover: #49a3c2;
+                --accent-subtle: #132a38;
+                --code-text: #d88aac;
+
+                --status-success: #3cc06e;
+                --status-success-subtle: #123020;
+                --status-warning: #dea535;
+                --status-warning-subtle: #2e2210;
+                --status-error: #e05555;
+                --status-error-subtle: #301414;
+                --status-info: #5cb8d6;
+                --status-info-subtle: #132a38;
+
+                --shadow-sm: 0 1px 2px rgba(0,0,0,0.25);
+                --shadow-md: 0 2px 8px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
             }
         }
 
@@ -112,7 +137,7 @@
             font-weight: 700;
             line-height: 1.3;
             color: var(--text-primary);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.025em;
             max-width: 560px;
             margin: 0 auto 1.25rem;
         }
@@ -137,7 +162,7 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.625rem 1.25rem;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 0.9375rem;
             font-weight: 500;
             text-decoration: none;
@@ -150,13 +175,7 @@
         }
 
         .btn-primary:hover {
-            background: #155bb5;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .btn-primary:hover {
-                background: #4a8be0;
-            }
+            background: var(--accent-hover);
         }
 
         .btn-secondary {
@@ -175,16 +194,47 @@
             flex-shrink: 0;
         }
 
-        /* ---- Workflow ---- */
+        /* ---- Divider with diamond ---- */
+        .divider {
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            height: 1px;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-light);
+        }
+
+        .divider::after {
+            content: '';
+        }
+
+        .divider-diamond {
+            width: 7px;
+            height: 7px;
+            background: var(--border);
+            transform: rotate(45deg);
+            flex-shrink: 0;
+            margin: 0 12px;
+        }
+
+        /* ---- Sections ---- */
         .section {
             padding: 2.5rem 0;
         }
 
         .section-label {
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
             color: var(--accent);
             margin-bottom: 0.5rem;
         }
@@ -192,7 +242,7 @@
         .section h2 {
             font-size: 1.375rem;
             font-weight: 700;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.015em;
             margin-bottom: 0.5rem;
         }
 
@@ -203,6 +253,7 @@
             max-width: 560px;
         }
 
+        /* ---- Workflow steps ---- */
         .workflow-steps {
             display: grid;
             gap: 1rem;
@@ -210,23 +261,38 @@
 
         .step {
             display: grid;
-            grid-template-columns: 2.5rem 1fr;
+            grid-template-columns: 2.25rem 1fr;
             gap: 0.875rem;
             align-items: start;
         }
 
-        .step-number {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            background: var(--accent-subtle);
-            color: var(--accent);
+        .step-marker {
+            width: 2.25rem;
+            height: 2.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 0.875rem;
             flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+
+        .step-diamond {
+            width: 1.75rem;
+            height: 1.75rem;
+            background: var(--accent-subtle);
+            border: 1.5px solid var(--accent);
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-diamond span {
+            transform: rotate(-45deg);
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--accent);
+            line-height: 1;
         }
 
         .step-content {
@@ -245,7 +311,7 @@
             line-height: 1.55;
         }
 
-        /* ---- Features ---- */
+        /* ---- Features grid ---- */
         .features-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -255,13 +321,13 @@
         .feature {
             background: var(--bg-feature);
             border: 1px solid var(--border-light);
-            border-radius: 10px;
+            border-radius: 6px;
             padding: 1.25rem;
         }
 
         .feature-icon {
-            width: 2rem;
-            height: 2rem;
+            width: 1.75rem;
+            height: 1.75rem;
             margin-bottom: 0.75rem;
             color: var(--accent);
         }
@@ -278,21 +344,23 @@
             line-height: 1.5;
         }
 
-        /* ---- Install ---- */
+        /* ---- Install block ---- */
         .install-block {
             background: var(--bg-surface);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 6px;
             box-shadow: var(--shadow-sm);
             overflow: hidden;
         }
 
         .install-header {
-            padding: 0.75rem 1rem;
+            padding: 0.625rem 1rem;
             border-bottom: 1px solid var(--border-light);
-            font-size: 0.8125rem;
-            font-weight: 500;
+            font-size: 0.75rem;
+            font-weight: 600;
             color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
         .install-body {
@@ -326,13 +394,6 @@
         .prereqs strong {
             color: var(--text-secondary);
             font-weight: 500;
-        }
-
-        /* ---- Divider ---- */
-        .divider {
-            border: none;
-            border-top: 1px solid var(--border-light);
-            margin: 0;
         }
 
         /* ---- Footer ---- */
@@ -433,7 +494,7 @@
     </header>
 
     <div class="container">
-        <hr class="divider">
+        <div class="divider"><span class="divider-diamond"></span></div>
 
         <!-- How it works -->
         <section class="section">
@@ -442,21 +503,27 @@
             <p class="section-intro">Email and Slack provide threading, search, notifications, and mobile clients out of the box. No terminal sessions to maintain, no custom clients to install.</p>
             <div class="workflow-steps">
                 <div class="step">
-                    <div class="step-number">1</div>
+                    <div class="step-marker">
+                        <div class="step-diamond"><span>1</span></div>
+                    </div>
                     <div class="step-content">
                         <p class="step-title">Send a message</p>
                         <p class="step-desc">Describe your task in plain language over email or Slack. Airut provisions an isolated workspace, runs Claude Code, and delivers results back in the same thread.</p>
                     </div>
                 </div>
                 <div class="step">
-                    <div class="step-number">2</div>
+                    <div class="step-marker">
+                        <div class="step-diamond"><span>2</span></div>
+                    </div>
                     <div class="step-content">
                         <p class="step-title">Review the pull request</p>
                         <p class="step-desc">The agent pushes a PR when configured to do so. Review the changes, leave comments, and reply in the thread &mdash; the agent reads your feedback and iterates. Conversation context persists across messages.</p>
                     </div>
                 </div>
                 <div class="step">
-                    <div class="step-number">3</div>
+                    <div class="step-marker">
+                        <div class="step-diamond"><span>3</span></div>
+                    </div>
                     <div class="step-content">
                         <p class="step-title">Merge and deploy</p>
                         <p class="step-desc">Approve and merge when ready. With CI/CD in place, merging deploys automatically. Multiple conversations run in parallel, each with isolated workspaces, session state, and credentials.</p>
@@ -465,7 +532,7 @@
             </div>
         </section>
 
-        <hr class="divider">
+        <div class="divider"><span class="divider-diamond"></span></div>
 
         <!-- Security & Features -->
         <section class="section">
@@ -506,7 +573,7 @@
             </div>
         </section>
 
-        <hr class="divider">
+        <div class="divider"><span class="divider-diamond"></span></div>
 
         <!-- Install -->
         <section class="section">
@@ -533,7 +600,7 @@
             <p class="prereqs"><strong>Prerequisites:</strong> Linux, <a href="https://docs.astral.sh/uv/" style="color: var(--accent); text-decoration: none;">uv</a>, Git, and <a href="https://podman.io/" style="color: var(--accent); text-decoration: none;">Podman</a> (rootless). Per-repository setup requires a <code style="background: var(--bg-code); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.8125rem; font-family: 'SF Mono', Menlo, Consolas, monospace;">.airut/</code> directory with container and network allowlist configuration. See the <a href="https://github.com/airutorg/airut/blob/main/doc/README.md" style="color: var(--accent); text-decoration: none;">documentation</a> for full setup instructions.</p>
         </section>
 
-        <hr class="divider">
+        <div class="divider"><span class="divider-diamond"></span></div>
 
         <!-- Footer -->
         <footer class="footer">
