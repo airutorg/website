@@ -429,6 +429,58 @@
             color: var(--accent);
         }
 
+        /* ---- Screenshots ---- */
+        .screenshots {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .screenshot {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .screenshot-dark { display: none; }
+
+        @media (prefers-color-scheme: dark) {
+            .screenshot-light { display: none; }
+            .screenshot-dark { display: block; }
+        }
+
+        .screenshot-caption {
+            padding: 0.75rem 1rem;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .screenshot-caption strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .screenshots-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .screenshots-pair {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ---- Responsive ---- */
         @media (max-width: 600px) {
             .hero {
@@ -527,6 +579,34 @@
                     <div class="step-content">
                         <p class="step-title">Merge and deploy</p>
                         <p class="step-desc">Approve and merge when ready. With CI/CD in place, merging deploys automatically. Multiple conversations run in parallel, each with isolated workspaces, session state, and credentials.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"><span class="divider-diamond"></span></div>
+
+        <!-- Dashboard -->
+        <section class="section">
+            <p class="section-label">Web dashboard</p>
+            <h2>Real-time visibility into every task</h2>
+            <p class="section-intro">Monitor running tasks, stream Claude's actions live, and inspect every network request through the allowlisting proxy.</p>
+            <div class="screenshots">
+                <div class="screenshot">
+                    <img class="screenshot-light" src="https://screenshots.airut.org/dashboard-light.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
+                    <img class="screenshot-dark" src="https://screenshots.airut.org/dashboard-dark.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
+                    <div class="screenshot-caption"><strong>Dashboard</strong> &mdash; Overview of active and recent tasks with status, duration, and cost</div>
+                </div>
+                <div class="screenshots-pair">
+                    <div class="screenshot">
+                        <img class="screenshot-light" src="https://screenshots.airut.org/actions-light.png" alt="Streaming Claude actions for a task" loading="lazy">
+                        <img class="screenshot-dark" src="https://screenshots.airut.org/actions-dark.png" alt="Streaming Claude actions for a task" loading="lazy">
+                        <div class="screenshot-caption"><strong>Actions</strong> &mdash; Live stream of Claude's tool calls and reasoning</div>
+                    </div>
+                    <div class="screenshot">
+                        <img class="screenshot-light" src="https://screenshots.airut.org/network-light.png" alt="Streaming network log for a task" loading="lazy">
+                        <img class="screenshot-dark" src="https://screenshots.airut.org/network-dark.png" alt="Streaming network log for a task" loading="lazy">
+                        <div class="screenshot-caption"><strong>Network</strong> &mdash; Every request through the proxy with allow/deny status</div>
                     </div>
                 </div>
             </div>
