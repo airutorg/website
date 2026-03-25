@@ -430,9 +430,10 @@
         }
 
         /* ---- Screenshots ---- */
-        .screenshots {
+        .screenshots-grid {
             display: grid;
-            gap: 1.5rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
 
         .screenshot {
@@ -443,17 +444,26 @@
             overflow: hidden;
         }
 
-        .screenshot img {
+        .screenshot-trigger {
+            display: block;
+            width: 100%;
+            padding: 0;
+            border: none;
+            background: none;
+            cursor: zoom-in;
+        }
+
+        .screenshot-trigger img {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        .screenshot img.screenshot-dark { display: none; }
+        .screenshot-trigger img.screenshot-dark { display: none; }
 
         @media (prefers-color-scheme: dark) {
-            .screenshot img.screenshot-light { display: none; }
-            .screenshot img.screenshot-dark { display: block; }
+            .screenshot-trigger img.screenshot-light { display: none; }
+            .screenshot-trigger img.screenshot-dark { display: block; }
         }
 
         .screenshot-caption {
@@ -469,14 +479,40 @@
             font-weight: 600;
         }
 
-        .screenshots-pair {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        /* ---- Screenshot modal (popover) ---- */
+        .screenshot-modal {
+            border: none;
+            background: none;
+            padding: 1.5rem;
+            max-width: 100vw;
+            max-height: 100vh;
+            overflow: auto;
+            cursor: zoom-out;
+        }
+
+        .screenshot-modal::backdrop {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .screenshot-modal img {
+            display: block;
+            max-width: min(1200px, 90vw);
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .screenshot-modal img.screenshot-dark { display: none; }
+
+        @media (prefers-color-scheme: dark) {
+            .screenshot-modal img.screenshot-light { display: none; }
+            .screenshot-modal img.screenshot-dark { display: block; }
         }
 
         @media (max-width: 600px) {
-            .screenshots-pair {
+            .screenshots-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -591,26 +627,55 @@
             <p class="section-label">Web dashboard</p>
             <h2>Real-time visibility into every task</h2>
             <p class="section-intro">Monitor running tasks, stream Claude's actions live, and inspect every network request through the allowlisting proxy.</p>
-            <div class="screenshots">
+            <div class="screenshots-grid">
                 <div class="screenshot">
-                    <img class="screenshot-light" src="https://screenshots.airut.org/dashboard-light.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
-                    <img class="screenshot-dark" src="https://screenshots.airut.org/dashboard-dark.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
-                    <div class="screenshot-caption"><strong>Dashboard</strong> &mdash; Overview of active and recent tasks with status, duration, and cost</div>
+                    <button class="screenshot-trigger" popovertarget="modal-dashboard">
+                        <img class="screenshot-light" src="https://screenshots.airut.org/dashboard-light.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
+                        <img class="screenshot-dark" src="https://screenshots.airut.org/dashboard-dark.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
+                    </button>
+                    <div class="screenshot-caption"><strong>Dashboard</strong> &mdash; Overview of active and recent tasks with status and duration</div>
                 </div>
-                <div class="screenshots-pair">
-                    <div class="screenshot">
+                <div class="screenshot">
+                    <button class="screenshot-trigger" popovertarget="modal-conversation">
+                        <img class="screenshot-light" src="https://screenshots.airut.org/conversation-light.png" alt="Airut conversation view showing task details" loading="lazy">
+                        <img class="screenshot-dark" src="https://screenshots.airut.org/conversation-dark.png" alt="Airut conversation view showing task details" loading="lazy">
+                    </button>
+                    <div class="screenshot-caption"><strong>Conversation</strong> &mdash; Task details, conversation thread, and cost breakdown</div>
+                </div>
+                <div class="screenshot">
+                    <button class="screenshot-trigger" popovertarget="modal-actions">
                         <img class="screenshot-light" src="https://screenshots.airut.org/actions-light.png" alt="Streaming Claude actions for a task" loading="lazy">
                         <img class="screenshot-dark" src="https://screenshots.airut.org/actions-dark.png" alt="Streaming Claude actions for a task" loading="lazy">
-                        <div class="screenshot-caption"><strong>Actions</strong> &mdash; Live stream of Claude's tool calls and reasoning</div>
-                    </div>
-                    <div class="screenshot">
+                    </button>
+                    <div class="screenshot-caption"><strong>Actions</strong> &mdash; Live stream of Claude's tool calls and reasoning</div>
+                </div>
+                <div class="screenshot">
+                    <button class="screenshot-trigger" popovertarget="modal-network">
                         <img class="screenshot-light" src="https://screenshots.airut.org/network-light.png" alt="Streaming network log for a task" loading="lazy">
                         <img class="screenshot-dark" src="https://screenshots.airut.org/network-dark.png" alt="Streaming network log for a task" loading="lazy">
-                        <div class="screenshot-caption"><strong>Network</strong> &mdash; Every request through the proxy with allow/deny status</div>
-                    </div>
+                    </button>
+                    <div class="screenshot-caption"><strong>Network</strong> &mdash; Every request through the proxy with allow/deny status</div>
                 </div>
             </div>
         </section>
+
+        <!-- Screenshot modals (popover, no JS) -->
+        <div class="screenshot-modal" id="modal-dashboard" popover>
+            <img class="screenshot-light" src="https://screenshots.airut.org/dashboard-light.png" alt="Airut dashboard showing tasks in flight">
+            <img class="screenshot-dark" src="https://screenshots.airut.org/dashboard-dark.png" alt="Airut dashboard showing tasks in flight">
+        </div>
+        <div class="screenshot-modal" id="modal-conversation" popover>
+            <img class="screenshot-light" src="https://screenshots.airut.org/conversation-light.png" alt="Airut conversation view showing task details">
+            <img class="screenshot-dark" src="https://screenshots.airut.org/conversation-dark.png" alt="Airut conversation view showing task details">
+        </div>
+        <div class="screenshot-modal" id="modal-actions" popover>
+            <img class="screenshot-light" src="https://screenshots.airut.org/actions-light.png" alt="Streaming Claude actions for a task">
+            <img class="screenshot-dark" src="https://screenshots.airut.org/actions-dark.png" alt="Streaming Claude actions for a task">
+        </div>
+        <div class="screenshot-modal" id="modal-network" popover>
+            <img class="screenshot-light" src="https://screenshots.airut.org/network-light.png" alt="Streaming network log for a task">
+            <img class="screenshot-dark" src="https://screenshots.airut.org/network-dark.png" alt="Streaming network log for a task">
+        </div>
 
         <div class="divider"><span class="divider-diamond"></span></div>
 
