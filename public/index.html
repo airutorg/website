@@ -100,7 +100,7 @@
 
         /* ---- Layout ---- */
         .container {
-            max-width: 720px;
+            max-width: 860px;
             margin: 0 auto;
             padding: 0 1.25rem;
         }
@@ -256,14 +256,46 @@
         /* ---- Workflow steps ---- */
         .workflow-steps {
             display: grid;
-            gap: 1rem;
+            gap: 2.5rem;
         }
 
         .step {
             display: grid;
-            grid-template-columns: 2.25rem 1fr;
-            gap: 0.875rem;
-            align-items: start;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .step:nth-child(even) {
+            direction: rtl;
+        }
+
+        .step:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .step-illustration {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .step-illustration img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .step-illustration img {
+                filter: invert(1) hue-rotate(180deg);
+            }
         }
 
         .step-marker {
@@ -273,7 +305,7 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            margin-top: 0.125rem;
+            margin-bottom: 0.5rem;
         }
 
         .step-diamond {
@@ -296,19 +328,29 @@
         }
 
         .step-content {
-            padding-top: 0.375rem;
+            padding-top: 0;
         }
 
         .step-title {
             font-weight: 600;
-            font-size: 0.9375rem;
-            margin-bottom: 0.125rem;
+            font-size: 1.0625rem;
+            margin-bottom: 0.375rem;
         }
 
         .step-desc {
             font-size: 0.875rem;
             color: var(--text-secondary);
-            line-height: 1.55;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .step {
+                grid-template-columns: 1fr;
+            }
+
+            .step:nth-child(even) {
+                direction: ltr;
+            }
         }
 
         /* ---- Features grid ---- */
@@ -616,30 +658,51 @@
             <p class="section-intro">Email and Slack provide threading, search, notifications, and mobile clients out of the box. No terminal sessions to maintain, no custom clients to install.</p>
             <div class="workflow-steps">
                 <div class="step">
-                    <div class="step-marker">
-                        <div class="step-diamond"><span>1</span></div>
+                    <div class="step-illustration">
+                        <img src="/assets/airut_step1.svg" alt="Airut creates an isolated workspace per conversation" loading="lazy">
                     </div>
                     <div class="step-content">
-                        <p class="step-title">Send a message</p>
-                        <p class="step-desc">Describe your task in plain language over email or Slack. Airut provisions an isolated workspace, runs Claude Code, and delivers results back in the same thread.</p>
+                        <div class="step-marker">
+                            <div class="step-diamond"><span>1</span></div>
+                        </div>
+                        <p class="step-title">Send a message, get an isolated workspace</p>
+                        <p class="step-desc">Describe your task in plain language over email or Slack. Airut creates a dedicated workspace for each conversation, cloning your repository into an isolated environment. Claude Code starts working immediately.</p>
                     </div>
                 </div>
                 <div class="step">
-                    <div class="step-marker">
-                        <div class="step-diamond"><span>2</span></div>
+                    <div class="step-illustration">
+                        <img src="/assets/airut_step2.svg" alt="Claude Code runs in a sandboxed environment" loading="lazy">
                     </div>
                     <div class="step-content">
-                        <p class="step-title">Review the pull request</p>
-                        <p class="step-desc">The agent pushes a PR when configured to do so. Review the changes, leave comments, and reply in the thread &mdash; the agent reads your feedback and iterates. Conversation context persists across messages.</p>
+                        <div class="step-marker">
+                            <div class="step-diamond"><span>2</span></div>
+                        </div>
+                        <p class="step-title">Sandboxed execution with credential isolation</p>
+                        <p class="step-desc">Claude Code runs inside an Airut sandbox. It can iterate with you over email or Slack, modify the workspace, and access the network &mdash; but only through a proxy that enforces allowlists and swaps surrogate credentials for real ones. The agent never holds credentials usable outside the sandbox.</p>
                     </div>
                 </div>
                 <div class="step">
-                    <div class="step-marker">
-                        <div class="step-diamond"><span>3</span></div>
+                    <div class="step-illustration">
+                        <img src="/assets/airut_step3.svg" alt="Pull request with sandboxed CI/CD" loading="lazy">
                     </div>
                     <div class="step-content">
-                        <p class="step-title">Merge and deploy</p>
-                        <p class="step-desc">Approve and merge when ready. With CI/CD in place, merging deploys automatically. Multiple conversations run in parallel, each with isolated workspaces, session state, and credentials.</p>
+                        <div class="step-marker">
+                            <div class="step-diamond"><span>3</span></div>
+                        </div>
+                        <p class="step-title">Pull request with sandboxed CI</p>
+                        <p class="step-desc">Claude Code pushes a PR when ready. Your CI/CD pipeline runs the agent-authored code &mdash; but the untrusted build and test commands execute inside an Airut sandbox too. CI runners are protected from exfiltration just like the workspace.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-illustration">
+                        <img src="/assets/airut_step4.svg" alt="Review, approve, and deploy" loading="lazy">
+                    </div>
+                    <div class="step-content">
+                        <div class="step-marker">
+                            <div class="step-diamond"><span>4</span></div>
+                        </div>
+                        <p class="step-title">Review, approve, deploy</p>
+                        <p class="step-desc">Review the PR, leave comments, and iterate via the thread. When satisfied, approve and merge. With CI/CD in place, merging deploys automatically. Multiple conversations run in parallel, each fully isolated.</p>
                     </div>
                 </div>
             </div>
