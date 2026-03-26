@@ -482,7 +482,7 @@
         .screenshot-trigger {
             flex: 1;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             width: 100%;
             padding: 0;
             border: none;
@@ -627,6 +627,14 @@
             <h1>Sandboxed Claude Code over email and Slack</h1>
             <p class="hero-tagline">Send a message, review a PR, merge to deploy</p>
             <p class="hero-description">Airut is a self-hosted, open-source system that runs Claude Code tasks from email and Slack. Each task gets an isolated container with network allowlisting, surrogate credentials, session persistence, and automatic cleanup.</p>
+            <div class="hero-cta">
+                <div class="install-block" style="max-width: 480px; margin: 0 auto 2rem; text-align: left;">
+                    <div class="install-body" style="padding: 0.875rem 1rem;">
+                        <pre><span class="cmd">uv tool install airut && airut install-service</span>
+<span class="comment"># Open http://localhost:5200 to configure</span></pre>
+                    </div>
+                </div>
+            </div>
             <div class="hero-links">
                 <a href="https://github.com/airutorg/airut" class="btn btn-primary">
                     <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -701,71 +709,6 @@
 
         <div class="divider"><span class="divider-diamond"></span></div>
 
-        <!-- Dashboard -->
-        <section class="section">
-            <p class="section-label">Web dashboard</p>
-            <h2>Real-time visibility into every task</h2>
-            <p class="section-intro">Monitor running tasks, stream Claude's actions live, and inspect every network request through the allowlisting proxy.</p>
-            <div class="screenshots-grid">
-                <div class="screenshot">
-                    <button class="screenshot-trigger" popovertarget="modal-dashboard">
-                        <img class="screenshot-light" src="https://screenshots.airut.org/dashboard-light-thumb.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
-                        <img class="screenshot-dark" src="https://screenshots.airut.org/dashboard-dark-thumb.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
-                    </button>
-                    <div class="screenshot-caption"><strong>Dashboard</strong> &mdash; Overview of active and recent tasks with status and duration</div>
-                </div>
-                <div class="screenshot">
-                    <button class="screenshot-trigger" popovertarget="modal-conversation">
-                        <img class="screenshot-light" src="https://screenshots.airut.org/conversation-light-thumb.png" alt="Airut conversation view showing task details" loading="lazy">
-                        <img class="screenshot-dark" src="https://screenshots.airut.org/conversation-dark-thumb.png" alt="Airut conversation view showing task details" loading="lazy">
-                    </button>
-                    <div class="screenshot-caption"><strong>Conversation</strong> &mdash; Task details, conversation thread, and cost breakdown</div>
-                </div>
-                <div class="screenshot">
-                    <button class="screenshot-trigger" popovertarget="modal-actions">
-                        <img class="screenshot-light" src="https://screenshots.airut.org/actions-light-thumb.png" alt="Streaming Claude actions for a task" loading="lazy">
-                        <img class="screenshot-dark" src="https://screenshots.airut.org/actions-dark-thumb.png" alt="Streaming Claude actions for a task" loading="lazy">
-                    </button>
-                    <div class="screenshot-caption"><strong>Actions</strong> &mdash; Live stream of Claude's tool calls and reasoning</div>
-                </div>
-                <div class="screenshot">
-                    <button class="screenshot-trigger" popovertarget="modal-network">
-                        <img class="screenshot-light" src="https://screenshots.airut.org/network-light-thumb.png" alt="Streaming network log for a task" loading="lazy">
-                        <img class="screenshot-dark" src="https://screenshots.airut.org/network-dark-thumb.png" alt="Streaming network log for a task" loading="lazy">
-                    </button>
-                    <div class="screenshot-caption"><strong>Network</strong> &mdash; Every request through the proxy with allow/deny status</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Screenshot modals (popover, no JS) -->
-        <div class="screenshot-modal" id="modal-dashboard" popover>
-            <button class="screenshot-modal-close" popovertarget="modal-dashboard" popovertargetaction="hide">
-                <img class="screenshot-light" src="https://screenshots.airut.org/dashboard-light.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
-                <img class="screenshot-dark" src="https://screenshots.airut.org/dashboard-dark.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
-            </button>
-        </div>
-        <div class="screenshot-modal" id="modal-conversation" popover>
-            <button class="screenshot-modal-close" popovertarget="modal-conversation" popovertargetaction="hide">
-                <img class="screenshot-light" src="https://screenshots.airut.org/conversation-light.png" alt="Airut conversation view showing task details" loading="lazy">
-                <img class="screenshot-dark" src="https://screenshots.airut.org/conversation-dark.png" alt="Airut conversation view showing task details" loading="lazy">
-            </button>
-        </div>
-        <div class="screenshot-modal" id="modal-actions" popover>
-            <button class="screenshot-modal-close" popovertarget="modal-actions" popovertargetaction="hide">
-                <img class="screenshot-light" src="https://screenshots.airut.org/actions-light.png" alt="Streaming Claude actions for a task" loading="lazy">
-                <img class="screenshot-dark" src="https://screenshots.airut.org/actions-dark.png" alt="Streaming Claude actions for a task" loading="lazy">
-            </button>
-        </div>
-        <div class="screenshot-modal" id="modal-network" popover>
-            <button class="screenshot-modal-close" popovertarget="modal-network" popovertargetaction="hide">
-                <img class="screenshot-light" src="https://screenshots.airut.org/network-light.png" alt="Streaming network log for a task" loading="lazy">
-                <img class="screenshot-dark" src="https://screenshots.airut.org/network-dark.png" alt="Streaming network log for a task" loading="lazy">
-            </button>
-        </div>
-
-        <div class="divider"><span class="divider-diamond"></span></div>
-
         <!-- Security & Features -->
         <section class="section">
             <p class="section-label">Security &amp; isolation</p>
@@ -807,6 +750,71 @@
 
         <div class="divider"><span class="divider-diamond"></span></div>
 
+        <!-- Dashboard -->
+        <section class="section">
+            <p class="section-label">Web dashboard</p>
+            <h2>Built-in web dashboard</h2>
+            <p class="section-intro">Airut comes with an optional built-in web dashboard for monitoring tasks and configuring the service. Designed to sit behind a reverse proxy.</p>
+            <div class="screenshots-grid">
+                <div class="screenshot">
+                    <button class="screenshot-trigger" popovertarget="modal-dashboard">
+                        <img class="screenshot-light" src="https://screenshots.airut.org/dashboard-light-thumb.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
+                        <img class="screenshot-dark" src="https://screenshots.airut.org/dashboard-dark-thumb.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
+                    </button>
+                    <div class="screenshot-caption"><strong>Dashboard</strong> &mdash; Overview of active and recent tasks with status and duration</div>
+                </div>
+                <div class="screenshot">
+                    <button class="screenshot-trigger" popovertarget="modal-conversation">
+                        <img class="screenshot-light" src="https://screenshots.airut.org/conversation-light-thumb.png" alt="Airut conversation view showing task details" loading="lazy">
+                        <img class="screenshot-dark" src="https://screenshots.airut.org/conversation-dark-thumb.png" alt="Airut conversation view showing task details" loading="lazy">
+                    </button>
+                    <div class="screenshot-caption"><strong>Conversation</strong> &mdash; Task details, conversation thread, and cost breakdown</div>
+                </div>
+                <div class="screenshot">
+                    <button class="screenshot-trigger" popovertarget="modal-config-repo">
+                        <img class="screenshot-light" src="https://screenshots.airut.org/config-repo-light-thumb.png" alt="Repository configuration in the web dashboard" loading="lazy">
+                        <img class="screenshot-dark" src="https://screenshots.airut.org/config-repo-dark-thumb.png" alt="Repository configuration in the web dashboard" loading="lazy">
+                    </button>
+                    <div class="screenshot-caption"><strong>Configuration</strong> &mdash; Full service configuration through the web dashboard</div>
+                </div>
+                <div class="screenshot">
+                    <button class="screenshot-trigger" popovertarget="modal-network">
+                        <img class="screenshot-light" src="https://screenshots.airut.org/network-light-thumb.png" alt="Streaming network log for a task" loading="lazy">
+                        <img class="screenshot-dark" src="https://screenshots.airut.org/network-dark-thumb.png" alt="Streaming network log for a task" loading="lazy">
+                    </button>
+                    <div class="screenshot-caption"><strong>Network</strong> &mdash; Every request through the proxy with allow/deny status</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screenshot modals (popover, no JS) -->
+        <div class="screenshot-modal" id="modal-dashboard" popover>
+            <button class="screenshot-modal-close" popovertarget="modal-dashboard" popovertargetaction="hide">
+                <img class="screenshot-light" src="https://screenshots.airut.org/dashboard-light.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
+                <img class="screenshot-dark" src="https://screenshots.airut.org/dashboard-dark.png" alt="Airut dashboard showing tasks in flight" loading="lazy">
+            </button>
+        </div>
+        <div class="screenshot-modal" id="modal-conversation" popover>
+            <button class="screenshot-modal-close" popovertarget="modal-conversation" popovertargetaction="hide">
+                <img class="screenshot-light" src="https://screenshots.airut.org/conversation-light.png" alt="Airut conversation view showing task details" loading="lazy">
+                <img class="screenshot-dark" src="https://screenshots.airut.org/conversation-dark.png" alt="Airut conversation view showing task details" loading="lazy">
+            </button>
+        </div>
+        <div class="screenshot-modal" id="modal-config-repo" popover>
+            <button class="screenshot-modal-close" popovertarget="modal-config-repo" popovertargetaction="hide">
+                <img class="screenshot-light" src="https://screenshots.airut.org/config-repo-light.png" alt="Repository configuration in the web dashboard" loading="lazy">
+                <img class="screenshot-dark" src="https://screenshots.airut.org/config-repo-dark.png" alt="Repository configuration in the web dashboard" loading="lazy">
+            </button>
+        </div>
+        <div class="screenshot-modal" id="modal-network" popover>
+            <button class="screenshot-modal-close" popovertarget="modal-network" popovertargetaction="hide">
+                <img class="screenshot-light" src="https://screenshots.airut.org/network-light.png" alt="Streaming network log for a task" loading="lazy">
+                <img class="screenshot-dark" src="https://screenshots.airut.org/network-dark.png" alt="Streaming network log for a task" loading="lazy">
+            </button>
+        </div>
+
+        <div class="divider"><span class="divider-diamond"></span></div>
+
         <!-- Install -->
         <section class="section">
             <p class="section-label">Get started</p>
@@ -815,18 +823,11 @@
             <div class="install-block">
                 <div class="install-header">Terminal</div>
                 <div class="install-body">
-                    <pre><span class="comment"># Install Airut</span>
+                    <pre><span class="comment"># Install Airut and start the service</span>
 <span class="cmd">uv tool install airut</span>
+<span class="cmd">airut install-service</span>
 
-<span class="comment"># Generate configuration</span>
-<span class="cmd">airut init</span>
-
-<span class="comment"># Edit ~/.config/airut/airut.yaml with your</span>
-<span class="comment"># email or Slack credentials and repository settings</span>
-
-<span class="comment"># Validate and start the service</span>
-<span class="cmd">airut check</span>
-<span class="cmd">airut install-service</span></pre>
+<span class="comment"># Open http://localhost:5200 to configure</span></pre>
                 </div>
             </div>
             <p class="prereqs"><strong>Prerequisites:</strong> Linux, <a href="https://docs.astral.sh/uv/" style="color: var(--accent); text-decoration: none;">uv</a>, Git, and <a href="https://podman.io/" style="color: var(--accent); text-decoration: none;">Podman</a> (rootless). Per-repository setup requires a <code style="background: var(--bg-code); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.8125rem; font-family: 'SF Mono', Menlo, Consolas, monospace;">.airut/</code> directory with container and network allowlist configuration. See the <a href="https://github.com/airutorg/airut/blob/main/doc/README.md" style="color: var(--accent); text-decoration: none;">documentation</a> for full setup instructions.</p>
