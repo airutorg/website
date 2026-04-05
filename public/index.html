@@ -344,6 +344,66 @@
             }
         }
 
+        /* ---- Key features list ---- */
+        .key-features {
+            display: grid;
+            gap: 0;
+        }
+
+        .key-feature {
+            display: grid;
+            grid-template-columns: 2.5rem 1fr;
+            gap: 0 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .key-feature:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .key-feature:first-child {
+            padding-top: 0;
+        }
+
+        .key-feature-num {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+            padding-top: 0.125rem;
+            text-align: right;
+        }
+
+        .key-feature-body h3 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            margin-bottom: 0.1875rem;
+        }
+
+        .key-feature-body p {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .key-feature-body a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .key-feature-body a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .key-feature {
+                grid-template-columns: 1.75rem 1fr;
+                gap: 0 0.75rem;
+            }
+        }
+
         /* ---- Features grid ---- */
         .features-grid {
             display: grid;
@@ -709,8 +769,67 @@
 
         <div class="divider"><span class="divider-diamond"></span></div>
 
+        <!-- Key features -->
+        <section class="section" id="features">
+            <p class="section-label">Key features</p>
+            <h2>What Airut provides</h2>
+            <div class="key-features">
+                <div class="key-feature">
+                    <div class="key-feature-num">01</div>
+                    <div class="key-feature-body">
+                        <h3>Email</h3>
+                        <p>Assign a dedicated email address to each repository. Send instructions to start a task; Airut authenticates the sender via DMARC, provisions an isolated workspace, and runs Claude Code. Each email thread maps to a persistent conversation &mdash; reply to continue where the agent left off.</p>
+                    </div>
+                </div>
+                <div class="key-feature">
+                    <div class="key-feature-num">02</div>
+                    <div class="key-feature-body">
+                        <h3>Slack</h3>
+                        <p>Add Airut as an <a href="https://api.slack.com/docs/apps/ai-apps-overview">agent</a> in your Slack workspace. Start a task by messaging the app directly; thread replies continue the conversation with full session context. Sender identity is verified at the platform level, with configurable authorization rules per repository.</p>
+                    </div>
+                </div>
+                <div class="key-feature">
+                    <div class="key-feature-num">03</div>
+                    <div class="key-feature-body">
+                        <h3>Scheduled tasks</h3>
+                        <p>Define cron schedules to run Claude automatically &mdash; daily code reviews, nightly health checks, weekly summaries. Tasks run in the same sandbox as interactive work. Results are delivered via email; recipients can reply to continue the conversation.</p>
+                    </div>
+                </div>
+                <div class="key-feature">
+                    <div class="key-feature-num">04</div>
+                    <div class="key-feature-body">
+                        <h3>Defense-in-depth security</h3>
+                        <p>Container isolation, network allowlisting, surrogate credentials, and channel authentication work as independent layers. Running Claude Code without interactive approval requires the sandbox to contain execution even if the agent is compromised. <a href="#security">Details below.</a></p>
+                    </div>
+                </div>
+                <div class="key-feature">
+                    <div class="key-feature-num">05</div>
+                    <div class="key-feature-body">
+                        <h3>Web dashboard</h3>
+                        <p>Monitor running and completed tasks, view streaming network activity logs, and configure repositories, channels, and credentials &mdash; all from your browser. <a href="#dashboard">Screenshots below.</a></p>
+                    </div>
+                </div>
+                <div class="key-feature">
+                    <div class="key-feature-num">06</div>
+                    <div class="key-feature-body">
+                        <h3>CI sandboxing</h3>
+                        <p>When an agent pushes a PR, CI runs agent-controlled code on your runners. The <code style="background: var(--bg-code); padding: 0.0625rem 0.25rem; border-radius: 3px; font-size: 0.75rem; font-family: 'SF Mono', Menlo, Consolas, monospace;">airut-sandbox</code> CLI and <a href="https://github.com/airutorg/sandbox-action">sandbox-action</a> GitHub Action run build and test commands inside the same container and network sandbox, preventing exfiltration from CI environments.</p>
+                    </div>
+                </div>
+                <div class="key-feature">
+                    <div class="key-feature-num">07</div>
+                    <div class="key-feature-body">
+                        <h3>Self-hosted &amp; open source</h3>
+                        <p>Deploy on your own Linux server with <code style="background: var(--bg-code); padding: 0.0625rem 0.25rem; border-radius: 3px; font-size: 0.75rem; font-family: 'SF Mono', Menlo, Consolas, monospace;">uv tool install airut</code>. Your code, conversations, and API keys never leave your infrastructure. MIT licensed with 100% unit test coverage enforced in CI.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"><span class="divider-diamond"></span></div>
+
         <!-- Security & Features -->
-        <section class="section">
+        <section class="section" id="security">
             <p class="section-label">Security &amp; isolation</p>
             <h2>Safe fully autonomous operation</h2>
             <p class="section-intro">Running Claude Code without interactive approval means the sandbox must contain execution even if the agent is compromised.</p>
@@ -751,7 +870,7 @@
         <div class="divider"><span class="divider-diamond"></span></div>
 
         <!-- Dashboard -->
-        <section class="section">
+        <section class="section" id="dashboard">
             <p class="section-label">Web dashboard</p>
             <h2>Built-in web dashboard</h2>
             <p class="section-intro">Airut comes with an optional built-in web dashboard for monitoring tasks and configuring the service. Designed to sit behind a reverse proxy.</p>
