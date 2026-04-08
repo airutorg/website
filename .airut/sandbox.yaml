@@ -14,6 +14,7 @@ pass_env:
   - DEPLOY_BRANCH
   - GITHUB_EVENT_NAME
   - PR_NUMBER
+  - WEBSITE_CANARY
 
 # Masked secrets: surrogate tokens inside the container, real values
 # injected by the proxy only for matching outbound requests.
