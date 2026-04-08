@@ -27,6 +27,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT }}
           DEPLOY_BRANCH: ${{ github.ref_name }}
+          WEBSITE_CANARY: ${{ secrets.WEBSITE_CANARY }}
         run: scripts/publish
 
   # Preview deploy (pull requests) — untrusted code, sandboxed.
@@ -45,6 +46,7 @@ jobs:
       GITHUB_EVENT_NAME: pull_request
       PR_NUMBER: ${{ github.event.pull_request.number }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      WEBSITE_CANARY: ${{ secrets.WEBSITE_CANARY }}
     steps:
       - uses: airutorg/sandbox-action@v0
         with:
