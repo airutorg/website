@@ -28,6 +28,16 @@ for var in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID CLOUDFLARE_PAGES_PROJECT D
 done
 
 # ---------------------------------------------------------------------------
+# Generate canary.txt from WEBSITE_CANARY secret
+# ---------------------------------------------------------------------------
+if [[ -n "${WEBSITE_CANARY:-}" ]]; then
+  printf '%s' "$WEBSITE_CANARY" > public/canary.txt
+  echo "Generated canary.txt" >&2
+else
+  echo "Warning: WEBSITE_CANARY is not set, skipping canary.txt generation" >&2
+fi
+
+# ---------------------------------------------------------------------------
 # Deploy to Cloudflare Pages
 # ---------------------------------------------------------------------------
 echo "Deploying public/ to Cloudflare Pages (branch: $DEPLOY_BRANCH)..." >&2
