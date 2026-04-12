@@ -494,149 +494,73 @@
             border-color: var(--accent);
         }
 
-        /* ---- Demo diagram ---- */
-        .demo-diagram {
-            padding: 16px 16px 8px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .demo-flow {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 0;
-            min-width: 540px;
-        }
-
-        .demo-node {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            padding: 7px 10px;
-            border: 1.5px solid var(--border);
-            border-radius: 5px;
-            background: var(--bg-surface);
-            opacity: 0.3;
-            transform: scale(0.97);
-            transition: opacity 0.4s, transform 0.4s, border-color 0.4s, box-shadow 0.4s;
+        /* ---- Demo SVG panel ---- */
+        .demo-anim {
             position: relative;
-            flex-shrink: 0;
-        }
-
-        .demo-node.active {
-            opacity: 1;
-            transform: scale(1.08);
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-subtle);
-            z-index: 1;
-        }
-
-        .demo-node.done {
-            opacity: 0.65;
-            transform: scale(1);
-            border-color: var(--status-success);
-        }
-
-        .demo-node-label {
-            font-size: 0.6875rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            white-space: nowrap;
-        }
-
-        .demo-node-detail {
-            font-size: 0.5625rem;
-            color: var(--text-tertiary);
-            white-space: nowrap;
-        }
-
-        .demo-node-callout {
-            position: absolute;
-            top: calc(100% + 8px);
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.5625rem;
-            color: var(--accent);
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-family: 'SF Mono', Menlo, Consolas, monospace;
-        }
-
-        .demo-node.active .demo-node-callout {
-            opacity: 1;
-        }
-
-        .demo-edge {
-            width: 20px;
-            height: 0;
-            border-top: 1.5px solid var(--border);
-            margin-top: 14px;
-            position: relative;
-            opacity: 0.3;
-            transition: opacity 0.3s, border-color 0.3s;
-            flex-shrink: 0;
-        }
-
-        .demo-edge.active {
-            opacity: 1;
-            border-color: var(--accent);
-        }
-
-        .demo-edge::after {
-            content: '';
-            position: absolute;
-            right: -1px;
-            top: -4px;
-            border-left: 5px solid var(--border);
-            border-top: 3px solid transparent;
-            border-bottom: 3px solid transparent;
-            transition: border-left-color 0.3s;
-        }
-
-        .demo-edge.active::after {
-            border-left-color: var(--accent);
-        }
-
-        .demo-return {
-            height: 24px;
-            margin: 0 24px;
-            border-left: 1.5px dashed var(--border);
-            border-right: 1.5px dashed var(--border);
-            border-bottom: 1.5px dashed var(--border);
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            position: relative;
-            opacity: 0;
-            transition: opacity 0.5s;
+            padding: 16px;
+            border-top: 1px solid var(--border-light);
             display: flex;
             justify-content: center;
-            align-items: flex-end;
+            overflow: hidden;
         }
 
-        .demo-return.visible {
-            opacity: 1;
+        .demo-anim-panel {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
         }
 
-        .demo-return::before {
-            content: '';
+        .demo-anim-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0;
             position: absolute;
-            top: -4px;
-            left: -5px;
-            border-bottom: 5px solid var(--border);
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
+            top: 0;
+            left: 0;
+            transition: opacity 0.5s ease;
         }
 
-        .demo-return-label {
-            transform: translateY(50%);
-            background: var(--bg-surface);
-            padding: 0 10px;
-            font-size: 0.625rem;
-            color: var(--text-tertiary);
-            white-space: nowrap;
+        .demo-anim-svg.active {
+            opacity: 1;
+            position: relative;
+        }
+
+        /* ---- SVG animation keyframes ---- */
+        @keyframes svgFlow {
+            to { stroke-dashoffset: -10; }
+        }
+
+        @keyframes svgBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes svgPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes svgDraw1 {
+            0%, 25% { stroke-dashoffset: 18; opacity: 0; }
+            35%, 100% { stroke-dashoffset: 0; opacity: 1; }
+        }
+
+        @keyframes svgDraw2 {
+            0%, 45% { stroke-dashoffset: 18; opacity: 0; }
+            55%, 100% { stroke-dashoffset: 0; opacity: 1; }
+        }
+
+        @keyframes svgDraw3 {
+            0%, 65% { stroke-dashoffset: 18; opacity: 0; }
+            75%, 100% { stroke-dashoffset: 0; opacity: 1; }
+        }
+
+        @keyframes svgParticle {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
         }
 
         /* ---- Key features list ---- */
@@ -1047,61 +971,159 @@
                         </div>
                     </div>
                 </div>
+                <div class="demo-anim">
+                    <div class="demo-anim-panel">
+                        <!-- SVG 1: Email → Workspace creation -->
+                        <svg id="demo-svg-1" class="demo-anim-svg" viewBox="0 0 400 210" role="img" aria-label="Email message triggers isolated workspace creation">
+                            <rect x="12" y="16" width="118" height="178" rx="6" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1.5"/>
+                            <g fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="40" y="34" width="50" height="36" rx="3"/>
+                                <polyline points="40,38 65,56 90,38"/>
+                            </g>
+                            <g stroke="var(--border)" stroke-width="1.5" stroke-linecap="round">
+                                <line x1="32" y1="90" x2="110" y2="90"/>
+                                <line x1="32" y1="104" x2="100" y2="104"/>
+                                <line x1="32" y1="118" x2="88" y2="118"/>
+                                <line x1="32" y1="132" x2="78" y2="132"/>
+                                <line x1="32" y1="146" x2="95" y2="146"/>
+                                <line x1="32" y1="160" x2="86" y2="160"/>
+                            </g>
+                            <line x1="143" y1="105" x2="244" y2="105" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" fill="none" style="animation: svgFlow 0.6s linear infinite"/>
+                            <polygon points="248,105 240,100 240,110" fill="var(--accent)"/>
+                            <circle r="3" fill="var(--accent)" style="animation: svgParticle 2s linear infinite"><animateMotion dur="2s" repeatCount="indefinite" path="M 143,105 L 248,105"/></circle>
+                            <circle r="3" fill="var(--accent)" style="animation: svgParticle 2s linear infinite; animation-delay: -1s"><animateMotion dur="2s" repeatCount="indefinite" path="M 143,105 L 248,105" begin="-1s"/></circle>
+                            <rect x="258" y="6" width="136" height="198" rx="8" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="8 4"/>
+                            <text x="272" y="24" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" font-weight="600" letter-spacing="0.06em">SANDBOX</text>
+                            <rect x="268" y="34" width="116" height="110" rx="4" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1"/>
+                            <rect x="268" y="34" width="116" height="22" rx="4" fill="var(--bg-code)"/>
+                            <rect x="268" y="50" width="116" height="6" fill="var(--bg-code)"/>
+                            <line x1="268" y1="56" x2="384" y2="56" stroke="var(--border)" stroke-width="0.75"/>
+                            <circle cx="280" cy="45" r="2.5" fill="var(--status-error)" opacity="0.7"/>
+                            <circle cx="289" cy="45" r="2.5" fill="var(--status-warning)" opacity="0.7"/>
+                            <circle cx="298" cy="45" r="2.5" fill="var(--status-success)" opacity="0.7"/>
+                            <text x="278" y="73" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">$ git clone...</text>
+                            <text x="278" y="89" fill="var(--status-success)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x2713; cloned</text>
+                            <text x="278" y="105" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">$ claude</text>
+                            <rect x="318" y="97" width="6" height="10" rx="1" fill="var(--accent)" style="animation: svgBlink 1s step-end infinite"/>
+                            <text x="278" y="131" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">Working...</text>
+                            <g transform="translate(274,156)" stroke="var(--text-tertiary)" stroke-width="1" fill="none" stroke-linecap="round">
+                                <path d="M 0,0 L 0,11 L 13,11 L 13,3 L 7.5,3 L 5.5,0 Z"/>
+                                <text x="17" y="9" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="8" stroke="none">src/</text>
+                            </g>
+                            <g transform="translate(274,172)" stroke="var(--text-tertiary)" stroke-width="1" fill="none" stroke-linecap="round">
+                                <path d="M 0,0 L 0,11 L 13,11 L 13,3 L 7.5,3 L 5.5,0 Z"/>
+                                <text x="17" y="9" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="8" stroke="none">tests/</text>
+                            </g>
+                            <g transform="translate(348,162)" fill="none" stroke="var(--text-tertiary)" stroke-width="1.2" stroke-linecap="round">
+                                <circle cx="0" cy="10" r="3.5"/>
+                                <circle cx="14" cy="0" r="3.5"/>
+                                <circle cx="0" cy="-8" r="3.5"/>
+                                <line x1="0" y1="6.5" x2="0" y2="-4.5"/>
+                                <path d="M 0,-4.5 C 4,-4.5 10,-1 10.5,0"/>
+                            </g>
+                        </svg>
+                        <!-- SVG 2: Sandbox execution with proxy -->
+                        <svg id="demo-svg-2" class="demo-anim-svg" viewBox="0 0 440 250" role="img" aria-label="Execution sandbox nested inside network sandbox with proxy">
+                            <rect x="5" y="5" width="430" height="240" rx="8" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="8 4"/>
+                            <text x="18" y="23" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" font-weight="600" letter-spacing="0.06em">NETWORK SANDBOX</text>
+                            <rect x="14" y="32" width="160" height="174" rx="6" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+                            <text x="26" y="48" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="8.5" font-weight="600" letter-spacing="0.06em" opacity="0.8">EXECUTION SANDBOX</text>
+                            <rect x="22" y="56" width="144" height="114" rx="4" fill="var(--bg-code)" stroke="var(--border)" stroke-width="1"/>
+                            <text x="32" y="76" fill="var(--accent)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">$ curl api</text>
+                            <rect x="100" y="67" width="5" height="9" rx="1" fill="var(--accent)" style="animation: svgBlink 1s step-end infinite"/>
+                            <text x="32" y="92" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">$ npm test</text>
+                            <text x="32" y="108" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">$ git push</text>
+                            <text x="32" y="124" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">$ make build</text>
+                            <text x="32" y="140" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">$ echo $TOKEN</text>
+                            <text x="32" y="156" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9" opacity="0.6">surr_abc123...</text>
+                            <g transform="translate(28,180)" stroke="var(--text-tertiary)" stroke-width="1" fill="none" stroke-linecap="round">
+                                <path d="M 0,0 L 0,11 L 13,11 L 13,3 L 7.5,3 L 5.5,0 Z"/>
+                                <text x="17" y="9" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="8" stroke="none">repo/</text>
+                            </g>
+                            <line x1="174" y1="118" x2="214" y2="118" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" fill="none" style="animation: svgFlow 0.6s linear infinite"/>
+                            <polygon points="218,118 210,113 210,123" fill="var(--accent)"/>
+                            <rect x="224" y="84" width="70" height="70" rx="6" fill="var(--accent-subtle)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <g transform="translate(259,108)" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="-11" y="-3" width="22" height="16" rx="2"/>
+                                <path d="M -7,-3 L -7,-8 A 7,7 0 0,1 7,-8 L 7,-3"/>
+                                <circle cx="0" cy="5" r="2" fill="var(--accent)"/>
+                            </g>
+                            <text x="259" y="140" text-anchor="middle" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" font-weight="600">PROXY</text>
+                            <line x1="298" y1="102" x2="336" y2="76" stroke="var(--status-success)" stroke-width="1.5" stroke-dasharray="6 4" fill="none" style="animation: svgFlow 0.6s linear infinite"/>
+                            <polygon points="-7,-4 0,0 -7,4" transform="translate(339,74) rotate(-34)" fill="var(--status-success)"/>
+                            <circle r="2.5" fill="var(--status-success)" style="animation: svgParticle 3s linear infinite"><animateMotion dur="3s" repeatCount="indefinite" path="M 174,118 L 218,118 L 259,118 L 298,102 L 339,74"/></circle>
+                            <rect x="344" y="50" width="82" height="44" rx="4" fill="var(--bg-surface)" stroke="var(--status-success)" stroke-width="1.2"/>
+                            <text x="385" y="69" text-anchor="middle" fill="var(--status-success)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5">github.com</text>
+                            <text x="385" y="85" text-anchor="middle" fill="var(--status-success)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700">&#x2713;</text>
+                            <line x1="298" y1="136" x2="336" y2="162" stroke="var(--status-error)" stroke-width="1.5" stroke-dasharray="6 4" fill="none" style="animation: svgFlow 0.6s linear infinite"/>
+                            <polygon points="-7,-4 0,0 -7,4" transform="translate(339,164) rotate(34)" fill="var(--status-error)"/>
+                            <rect x="344" y="144" width="82" height="44" rx="4" fill="var(--bg-surface)" stroke="var(--status-error)" stroke-width="1.2"/>
+                            <text x="385" y="163" text-anchor="middle" fill="var(--status-error)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5">evil.com</text>
+                            <text x="385" y="179" text-anchor="middle" fill="var(--status-error)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700">&#x2717;</text>
+                            <g transform="translate(224,210)">
+                                <g fill="none" stroke="var(--text-tertiary)" stroke-width="1.2" stroke-linecap="round">
+                                    <circle cx="8" cy="6" r="4"/>
+                                    <line x1="12" y1="6" x2="22" y2="6"/>
+                                    <line x1="18" y1="6" x2="18" y2="10"/>
+                                </g>
+                                <text x="27" y="10" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10">&#x2192;</text>
+                                <g fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" transform="translate(40,0)">
+                                    <circle cx="8" cy="6" r="4"/>
+                                    <line x1="12" y1="6" x2="22" y2="6"/>
+                                    <line x1="18" y1="6" x2="18" y2="10"/>
+                                    <line x1="21" y1="6" x2="21" y2="9"/>
+                                </g>
+                            </g>
+                            <text x="224" y="236" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="8.5">Credential swap on allowed hosts</text>
+                        </svg>
+                        <!-- SVG 3: PR + CI pipeline -->
+                        <svg id="demo-svg-3" class="demo-anim-svg" viewBox="0 0 400 210" role="img" aria-label="Pull request triggers sandboxed CI pipeline">
+                            <rect x="15" y="25" width="110" height="160" rx="6" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1.5"/>
+                            <g transform="translate(70,58)" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round">
+                                <circle cx="0" cy="14" r="5"/>
+                                <circle cx="0" cy="-14" r="5"/>
+                                <circle cx="16" cy="-4" r="5"/>
+                                <line x1="0" y1="9" x2="0" y2="-9"/>
+                                <path d="M 11,-4 C 6,-4 0,-4 0,-9"/>
+                            </g>
+                            <text x="36" y="100" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" font-weight="700">PR #42</text>
+                            <g stroke="var(--border)" stroke-width="1.5" stroke-linecap="round">
+                                <line x1="36" y1="114" x2="104" y2="114"/>
+                                <line x1="36" y1="126" x2="96" y2="126"/>
+                                <line x1="36" y1="138" x2="88" y2="138"/>
+                            </g>
+                            <text x="36" y="164" fill="var(--status-success)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">+127</text>
+                            <text x="68" y="164" fill="var(--status-error)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">-34</text>
+                            <line x1="138" y1="105" x2="195" y2="105" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" fill="none" style="animation: svgFlow 0.6s linear infinite"/>
+                            <polygon points="199,105 191,100 191,110" fill="var(--accent)"/>
+                            <circle r="3" fill="var(--accent)" style="animation: svgParticle 1.8s linear infinite"><animateMotion dur="1.8s" repeatCount="indefinite" path="M 138,105 L 195,105"/></circle>
+                            <rect x="208" y="16" width="180" height="178" rx="6" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="8 4"/>
+                            <text x="222" y="35" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" font-weight="600" letter-spacing="0.06em">CI SANDBOX</text>
+                            <rect x="224" y="48" width="148" height="34" rx="4" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1"/>
+                            <text x="240" y="70" fill="var(--text-primary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" font-weight="500">Build</text>
+                            <polyline points="354,60 358,65 366,55" fill="none" stroke="var(--status-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="18" style="animation: svgDraw1 4s ease infinite"/>
+                            <rect x="224" y="92" width="148" height="34" rx="4" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1"/>
+                            <text x="240" y="114" fill="var(--text-primary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" font-weight="500">Test</text>
+                            <polyline points="354,104 358,109 366,99" fill="none" stroke="var(--status-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="18" style="animation: svgDraw2 4s ease infinite"/>
+                            <rect x="224" y="136" width="148" height="34" rx="4" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1"/>
+                            <text x="240" y="158" fill="var(--text-primary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" font-weight="500">Lint</text>
+                            <polyline points="354,148 358,153 366,143" fill="none" stroke="var(--status-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="18" style="animation: svgDraw3 4s ease infinite"/>
+                        </svg>
+                    </div>
+                </div>
                 <div class="demo-hood">Under the hood</div>
                 <div class="demo-steps">
                     <div class="demo-step" id="demo-s1">
                         <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                        <span class="demo-step-text">Authenticating sender via DMARC</span>
+                        <span class="demo-step-text">Running Claude Code in sandbox</span>
                     </div>
                     <div class="demo-step" id="demo-s2">
                         <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                        <span class="demo-step-text">Provisioning isolated container</span>
+                        <span class="demo-step-text">Pushing PR through proxy</span>
                     </div>
                     <div class="demo-step" id="demo-s3">
                         <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                        <span class="demo-step-text">Cloning repository into sandbox</span>
-                    </div>
-                    <div class="demo-step" id="demo-s4">
-                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                        <span class="demo-step-text">Running Claude Code</span>
-                    </div>
-                    <div class="demo-step" id="demo-s5">
-                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                        <span class="demo-step-text">Opening pull request</span>
-                    </div>
-                </div>
-                <div class="demo-diagram">
-                    <div class="demo-flow">
-                        <div class="demo-node" id="dn-email">
-                            <span class="demo-node-label">Email</span>
-                        </div>
-                        <div class="demo-edge" id="de-1"></div>
-                        <div class="demo-node" id="dn-airut">
-                            <span class="demo-node-label">Airut</span>
-                        </div>
-                        <div class="demo-edge" id="de-2"></div>
-                        <div class="demo-node" id="dn-sandbox">
-                            <span class="demo-node-label">Sandbox</span>
-                            <span class="demo-node-detail">Claude Code</span>
-                        </div>
-                        <div class="demo-edge" id="de-3"></div>
-                        <div class="demo-node" id="dn-proxy">
-                            <span class="demo-node-label">Proxy</span>
-                            <span class="demo-node-callout">surrogate &rarr; real creds</span>
-                        </div>
-                        <div class="demo-edge" id="de-4"></div>
-                        <div class="demo-node" id="dn-github">
-                            <span class="demo-node-label">GitHub</span>
-                            <span class="demo-node-detail">PR #42</span>
-                        </div>
-                        <div class="demo-edge" id="de-5"></div>
-                        <div class="demo-node" id="dn-ci">
-                            <span class="demo-node-label">CI Sandbox</span>
-                            <span class="demo-node-detail">tests</span>
-                        </div>
-                    </div>
-                    <div class="demo-return" id="dn-return">
-                        <span class="demo-return-label">reply via email</span>
+                        <span class="demo-step-text">CI checks passing in sandbox</span>
                     </div>
                 </div>
                 <div class="demo-footer">
@@ -1322,109 +1344,64 @@
     var steps = [
         document.getElementById('demo-s1'),
         document.getElementById('demo-s2'),
-        document.getElementById('demo-s3'),
-        document.getElementById('demo-s4'),
-        document.getElementById('demo-s5')
+        document.getElementById('demo-s3')
+    ];
+    var svgs = [
+        document.getElementById('demo-svg-1'),
+        document.getElementById('demo-svg-2'),
+        document.getElementById('demo-svg-3')
     ];
     var replay = document.getElementById('demo-replay');
-
-    var nodes = [
-        document.getElementById('dn-email'),
-        document.getElementById('dn-airut'),
-        document.getElementById('dn-sandbox'),
-        document.getElementById('dn-proxy'),
-        document.getElementById('dn-github'),
-        document.getElementById('dn-ci')
-    ];
-    var edges = [
-        document.getElementById('de-1'),
-        document.getElementById('de-2'),
-        document.getElementById('de-3'),
-        document.getElementById('de-4'),
-        document.getElementById('de-5')
-    ];
-    var returnPath = document.getElementById('dn-return');
-
     var timers = [];
 
     function at(fn, ms) { timers.push(setTimeout(fn, ms)); }
     function show(el) { el.classList.add('visible'); }
     function activate(el) { el.classList.add('visible', 'active'); }
     function done(el) { el.classList.remove('active'); el.classList.add('done'); }
-    function nodeOn(el) { el.classList.add('active'); }
-    function nodeDone(el) { el.classList.remove('active'); el.classList.add('done'); }
+
+    function showSvg(index) {
+        svgs.forEach(function(s, i) {
+            if (i === index) { s.classList.add('active'); }
+            else { s.classList.remove('active'); }
+        });
+    }
 
     function reset() {
         timers.forEach(clearTimeout);
         timers = [];
         msgs.forEach(function(m) { m.classList.remove('visible'); });
         steps.forEach(function(s) { s.classList.remove('visible', 'active', 'done'); });
-        nodes.forEach(function(n) { n.classList.remove('active', 'done'); });
-        edges.forEach(function(e) { e.classList.remove('active'); });
-        returnPath.classList.remove('visible');
+        svgs.forEach(function(s) { s.classList.remove('active'); });
         replay.classList.remove('visible');
     }
 
     function play() {
         reset();
 
-        /* ---- Email thread + step list (unchanged timing) ---- */
-        at(function() { show(msgs[0]); }, 300);
+        // User sends email — show workspace creation diagram
+        at(function() { show(msgs[0]); showSvg(0); }, 300);
 
-        at(function() { activate(steps[0]); }, 1000);
-        at(function() { done(steps[0]); }, 1500);
-
-        at(function() { activate(steps[1]); }, 1600);
-        at(function() { done(steps[1]); }, 2200);
-
-        at(function() { activate(steps[2]); }, 2300);
-        at(function() { done(steps[2]); }, 2900);
-
+        // Transition to sandbox execution diagram + first Airut reply
+        at(function() { showSvg(1); }, 2500);
         at(function() { show(msgs[1]); }, 3100);
 
-        at(function() { activate(steps[3]); }, 3300);
-        at(function() { done(steps[3]); }, 5500);
+        // Step 1: Running Claude Code in sandbox
+        at(function() { activate(steps[0]); }, 3300);
+        at(function() { done(steps[0]); }, 5200);
 
-        at(function() { activate(steps[4]); }, 5600);
-        at(function() { done(steps[4]); }, 6400);
+        // Step 2: Pushing PR through proxy — switch to PR+CI diagram
+        at(function() { activate(steps[1]); showSvg(2); }, 5300);
+        at(function() { done(steps[1]); }, 6000);
 
-        at(function() { show(msgs[2]); }, 6700);
+        // Step 3: CI checks passing in sandbox
+        at(function() { activate(steps[2]); }, 6100);
+        at(function() { done(steps[2]); }, 6800);
 
-        at(function() { show(replay); }, 7400);
+        // Final Airut reply with PR details
+        at(function() { show(msgs[2]); }, 7100);
 
-        /* ---- Diagram: nodes + edges light up in sync ---- */
-
-        // Email arrives
-        at(function() { nodeOn(nodes[0]); }, 300);
-        at(function() { nodeDone(nodes[0]); edges[0].classList.add('active'); }, 900);
-
-        // Airut receives and authenticates
-        at(function() { nodeOn(nodes[1]); }, 1000);
-        at(function() { nodeDone(nodes[1]); edges[1].classList.add('active'); }, 1500);
-
-        // Sandbox: provision + clone + Claude Code
-        at(function() { nodeOn(nodes[2]); }, 1600);
-        at(function() { nodeDone(nodes[2]); edges[2].classList.add('active'); }, 5400);
-
-        // Proxy: credential swap on push
-        at(function() { nodeOn(nodes[3]); }, 5500);
-        at(function() { nodeDone(nodes[3]); edges[3].classList.add('active'); }, 5900);
-
-        // GitHub: PR created
-        at(function() { nodeOn(nodes[4]); }, 5900);
-        at(function() { nodeDone(nodes[4]); edges[4].classList.add('active'); }, 6200);
-
-        // CI Sandbox: tests run
-        at(function() { nodeOn(nodes[5]); }, 6200);
-        at(function() { nodeDone(nodes[5]); }, 6500);
-
-        // Return path + email lights up again
-        at(function() {
-            returnPath.classList.add('visible');
-            nodes[0].classList.remove('done');
-            nodeOn(nodes[0]);
-        }, 6600);
-        at(function() { nodeDone(nodes[0]); }, 7100);
+        // Replay button
+        at(function() { show(replay); }, 7800);
     }
 
     var observer = new IntersectionObserver(function(entries) {
