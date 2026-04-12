@@ -287,6 +287,9 @@
 
         .demo-thread {
             padding: 4px 16px;
+            max-height: 170px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
         }
 
         .demo-msg {
@@ -508,22 +511,23 @@
             position: relative;
             width: 100%;
             max-width: 440px;
+            aspect-ratio: 440 / 250;
         }
 
         .demo-anim-svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 100%;
             height: auto;
-            display: block;
+            max-height: 100%;
             opacity: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.8s ease;
         }
 
         .demo-anim-svg.active {
             opacity: 1;
-            position: relative;
         }
 
         /* ---- SVG animation keyframes ---- */
@@ -1430,10 +1434,16 @@
         document.getElementById('demo-svg-4')
     ];
     var replay = document.getElementById('demo-replay');
+    var thread = document.querySelector('.demo-thread');
     var timers = [];
 
     function at(fn, ms) { timers.push(setTimeout(fn, ms)); }
-    function show(el) { el.classList.add('visible'); }
+    function show(el) {
+        el.classList.add('visible');
+        if (el.closest('.demo-thread')) {
+            thread.scrollTop = thread.scrollHeight;
+        }
+    }
     function activate(el) { el.classList.add('visible', 'active'); }
     function done(el) { el.classList.remove('active'); el.classList.add('done'); }
 
@@ -1451,6 +1461,7 @@
         steps.forEach(function(s) { s.classList.remove('visible', 'active', 'done'); });
         svgs.forEach(function(s) { s.classList.remove('active'); });
         replay.classList.remove('visible');
+        thread.scrollTop = 0;
     }
 
     function play() {
