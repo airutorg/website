@@ -287,9 +287,8 @@
 
         .demo-thread {
             padding: 4px 16px;
-            max-height: 170px;
+            max-height: 180px;
             overflow-y: auto;
-            scroll-behavior: smooth;
         }
 
         .demo-msg {
@@ -380,7 +379,6 @@
             padding: 8px 16px;
             background: var(--bg-feature);
             border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
             font-size: 0.6875rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -390,6 +388,9 @@
 
         .demo-steps {
             padding: 12px 16px;
+            max-height: 140px;
+            overflow-y: auto;
+            border-top: 1px solid var(--border-light);
         }
 
         .demo-step {
@@ -1001,6 +1002,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="demo-hood">Under the hood</div>
                 <div class="demo-anim">
                     <div class="demo-anim-panel">
                         <!-- SVG 1: Email → Workspace creation -->
@@ -1185,23 +1187,54 @@
                         </svg>
                     </div>
                 </div>
-                <div class="demo-hood">Under the hood</div>
                 <div class="demo-steps">
                     <div class="demo-step" id="demo-s1">
                         <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                        <span class="demo-step-text">Running Claude Code in sandbox</span>
+                        <span class="demo-step-text">Authenticating sender via DMARC</span>
                     </div>
                     <div class="demo-step" id="demo-s2">
                         <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                        <span class="demo-step-text">Pushing PR through proxy</span>
+                        <span class="demo-step-text">Provisioning isolated container</span>
                     </div>
                     <div class="demo-step" id="demo-s3">
                         <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                        <span class="demo-step-text">CI checks passing in sandbox</span>
+                        <span class="demo-step-text">Cloning repository</span>
                     </div>
                     <div class="demo-step" id="demo-s4">
                         <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                        <span class="demo-step-text">Merged and deployed</span>
+                        <span class="demo-step-text">Starting Claude Code</span>
+                    </div>
+                    <div class="demo-step" id="demo-s5">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Writing code and running tests</span>
+                    </div>
+                    <div class="demo-step" id="demo-s6">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Network requests through proxy</span>
+                    </div>
+                    <div class="demo-step" id="demo-s7">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Pushing branch through proxy</span>
+                    </div>
+                    <div class="demo-step" id="demo-s8">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Creating pull request</span>
+                    </div>
+                    <div class="demo-step" id="demo-s9">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">CI checks running in sandbox</span>
+                    </div>
+                    <div class="demo-step" id="demo-s10">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">PR approved</span>
+                    </div>
+                    <div class="demo-step" id="demo-s11">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Merging to main</span>
+                    </div>
+                    <div class="demo-step" id="demo-s12">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Deploying to production</span>
                     </div>
                 </div>
                 <div class="demo-footer">
@@ -1421,12 +1454,8 @@
         document.getElementById('demo-msg-4'),
         document.getElementById('demo-msg-5')
     ];
-    var steps = [
-        document.getElementById('demo-s1'),
-        document.getElementById('demo-s2'),
-        document.getElementById('demo-s3'),
-        document.getElementById('demo-s4')
-    ];
+    var steps = [];
+    for (var i = 1; i <= 12; i++) { steps.push(document.getElementById('demo-s' + i)); }
     var svgs = [
         document.getElementById('demo-svg-1'),
         document.getElementById('demo-svg-2'),
@@ -1435,16 +1464,26 @@
     ];
     var replay = document.getElementById('demo-replay');
     var thread = document.querySelector('.demo-thread');
+    var stepsContainer = document.querySelector('.demo-steps');
     var timers = [];
 
     function at(fn, ms) { timers.push(setTimeout(fn, ms)); }
     function show(el) {
         el.classList.add('visible');
         if (el.closest('.demo-thread')) {
-            thread.scrollTop = thread.scrollHeight;
+            var bottom = el.offsetTop + el.offsetHeight;
+            if (bottom > thread.scrollTop + thread.clientHeight) {
+                thread.scrollTop = bottom - thread.clientHeight;
+            }
         }
     }
-    function activate(el) { el.classList.add('visible', 'active'); }
+    function activate(el) {
+        el.classList.add('visible', 'active');
+        var bottom = el.offsetTop + el.offsetHeight;
+        if (bottom > stepsContainer.scrollTop + stepsContainer.clientHeight) {
+            stepsContainer.scrollTop = bottom - stepsContainer.clientHeight;
+        }
+    }
     function done(el) { el.classList.remove('active'); el.classList.add('done'); }
 
     function showSvg(index) {
@@ -1462,45 +1501,44 @@
         svgs.forEach(function(s) { s.classList.remove('active'); });
         replay.classList.remove('visible');
         thread.scrollTop = 0;
+        stepsContainer.scrollTop = 0;
     }
 
     function play() {
         reset();
-
-        // User sends email — show workspace creation diagram
+        // Each diagram stays ~3.5s. Total ~16s.
+        // Phase 1: Email → Workspace (SVG 1) — 0.3s to 3.8s
         at(function() { show(msgs[0]); showSvg(0); }, 300);
+        at(function() { activate(steps[0]); }, 600);
+        at(function() { done(steps[0]); activate(steps[1]); }, 1600);
+        at(function() { done(steps[1]); activate(steps[2]); }, 2600);
+        at(function() { done(steps[2]); }, 3500);
 
-        // Transition to sandbox execution diagram + first Airut reply
-        at(function() { showSvg(1); }, 2500);
-        at(function() { show(msgs[1]); }, 3100);
+        // Phase 2: Sandbox execution + proxy (SVG 2) — 3.8s to 7.3s
+        at(function() { showSvg(1); show(msgs[1]); }, 3800);
+        at(function() { activate(steps[3]); }, 4100);
+        at(function() { done(steps[3]); activate(steps[4]); }, 5100);
+        at(function() { done(steps[4]); activate(steps[5]); }, 6100);
+        at(function() { done(steps[5]); }, 7000);
 
-        // Step 1: Running Claude Code in sandbox
-        at(function() { activate(steps[0]); }, 3300);
-        at(function() { done(steps[0]); }, 5200);
+        // Phase 3: PR + CI (SVG 3) — 7.3s to 10.8s
+        at(function() { showSvg(2); }, 7300);
+        at(function() { activate(steps[6]); }, 7600);
+        at(function() { done(steps[6]); activate(steps[7]); }, 8600);
+        at(function() { done(steps[7]); activate(steps[8]); }, 9600);
+        at(function() { done(steps[8]); }, 10500);
+        at(function() { show(msgs[2]); }, 10600);
 
-        // Step 2: Pushing PR through proxy — switch to PR+CI diagram
-        at(function() { activate(steps[1]); showSvg(2); }, 5300);
-        at(function() { done(steps[1]); }, 6000);
+        // Phase 4: Approve, merge, deploy (SVG 4) — 10.8s to 14.8s
+        at(function() { show(msgs[3]); }, 11200);
+        at(function() { showSvg(3); activate(steps[9]); }, 11800);
+        at(function() { done(steps[9]); activate(steps[10]); }, 12800);
+        at(function() { done(steps[10]); activate(steps[11]); }, 13500);
+        at(function() { done(steps[11]); }, 14300);
+        at(function() { show(msgs[4]); }, 14500);
 
-        // Step 3: CI checks passing in sandbox
-        at(function() { activate(steps[2]); }, 6100);
-        at(function() { done(steps[2]); }, 6800);
-
-        // Airut reply with PR details
-        at(function() { show(msgs[2]); }, 7100);
-
-        // User approves: "Looks good. Please merge."
-        at(function() { show(msgs[3]); }, 8000);
-
-        // Step 4: Merging and deploying — switch to deploy diagram
-        at(function() { activate(steps[3]); showSvg(3); }, 8700);
-        at(function() { done(steps[3]); }, 9500);
-
-        // Airut confirms merge and deploy
-        at(function() { show(msgs[4]); }, 9800);
-
-        // Replay button
-        at(function() { show(replay); }, 10500);
+        // Replay
+        at(function() { show(replay); }, 15200);
     }
 
     var observer = new IntersectionObserver(function(entries) {
