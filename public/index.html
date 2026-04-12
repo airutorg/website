@@ -266,24 +266,16 @@
         .demo-header {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 10px 16px;
+            padding: 12px 16px;
             border-bottom: 1px solid var(--border-light);
             background: var(--bg-feature);
         }
 
-        .demo-header-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--border);
-        }
-
         .demo-header-title {
-            margin-left: 8px;
-            font-size: 0.8125rem;
+            font-size: 0.875rem;
             font-weight: 600;
-            color: var(--text-secondary);
+            color: var(--text-primary);
+            letter-spacing: 0.01em;
         }
 
         .demo-carousel {
@@ -966,10 +958,7 @@
             <p class="section-intro">Send an email or Slack message, get back a pull request. No terminal sessions or custom clients needed.</p>
             <div class="demo">
                 <div class="demo-header">
-                    <span class="demo-header-dot"></span>
-                    <span class="demo-header-dot"></span>
-                    <span class="demo-header-dot"></span>
-                    <span class="demo-header-title">1. Send a message</span>
+                    <span class="demo-header-title">1. Send a message, get an isolated workspace</span>
                 </div>
                 <div class="demo-carousel">
                     <button class="demo-arrow demo-arrow-prev" aria-label="Previous step">&#8249;</button>
@@ -1047,15 +1036,15 @@
                         <div class="demo-slide-checks">
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">DMARC validation</span>
+                                <span class="demo-check-text">Validating sender identity via DMARC</span>
                             </div>
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">Creating conversation workspace</span>
+                                <span class="demo-check-text">Provisioning isolated container with repository clone</span>
                             </div>
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">Launching Claude Code</span>
+                                <span class="demo-check-text">Starting Claude Code in fully permissive mode</span>
                             </div>
                         </div>
                     </div>
@@ -1141,15 +1130,15 @@
                         <div class="demo-slide-checks">
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">Requests to allowed hosts</span>
+                                <span class="demo-check-text">Routing API requests through allowlisted proxy</span>
                             </div>
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">Credentials swapped on the way out</span>
+                                <span class="demo-check-text">Swapping surrogate credentials for real tokens at proxy</span>
                             </div>
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">Implement feature</span>
+                                <span class="demo-check-text">Implementing feature with tests in sandboxed environment</span>
                             </div>
                         </div>
                     </div>
@@ -1217,15 +1206,15 @@
                         <div class="demo-slide-checks">
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">Creating pull request</span>
+                                <span class="demo-check-text">Creating pull request via proxy credential exchange</span>
                             </div>
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">Running CI in sandbox</span>
+                                <span class="demo-check-text">Running build, test, and lint in CI sandbox</span>
                             </div>
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">Sending reply to user</span>
+                                <span class="demo-check-text">Composing reply with PR link and CI results</span>
                             </div>
                         </div>
                     </div>
@@ -1297,15 +1286,15 @@
                         <div class="demo-slide-checks">
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">Verify code review feedback</span>
+                                <span class="demo-check-text">Verifying code review approval on pull request</span>
                             </div>
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">Merge and wait for deployment</span>
+                                <span class="demo-check-text">Merging to main and waiting for deployment to complete</span>
                             </div>
                             <div class="demo-check">
                                 <div class="demo-check-dot"><svg class="demo-check-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
-                                <span class="demo-check-text">Reply to confirm change is live</span>
+                                <span class="demo-check-text">Confirming deployment is live and replying to user</span>
                             </div>
                         </div>
                     </div>
@@ -1529,7 +1518,7 @@
     var prevBtn = demo.querySelector('.demo-arrow-prev');
     var nextBtn = demo.querySelector('.demo-arrow-next');
     var headerTitle = demo.querySelector('.demo-header-title');
-    var titles = ['1. Send a message', '2. Code in a sandbox', '3. Push and test', '4. Approve and deploy'];
+    var titles = ['1. Send a message, get an isolated workspace', '2. Code in a sandbox with network isolation', '3. Push a PR and run CI in a sandbox', '4. Approve, merge, and deploy'];
     var current = 0;
     var timers = [];
     var autoplayTimer = null;
@@ -1556,8 +1545,8 @@
         at(function() { msgs[0].classList.add('visible'); }, 200);
 
         // Animate checks sequentially
-        var checkDelay = 700;
-        var checkDuration = 900;
+        var checkDelay = 1400;
+        var checkDuration = 1800;
         checks.forEach(function(check, i) {
             at(function() {
                 check.classList.add('visible', 'active');
@@ -1576,7 +1565,7 @@
 
         // Schedule autoplay advance if active
         if (autoplayActive) {
-            var totalTime = afterChecks + 2000;
+            var totalTime = afterChecks + 4000;
             autoplayTimer = setTimeout(function() { goTo(current + 1); }, totalTime);
             timers.push(autoplayTimer);
         }
@@ -1631,6 +1620,54 @@
     }, { threshold: 0.2 });
 
     observer.observe(demo);
+
+    // Compute fixed section heights to prevent layout shifts between slides
+    (function setFixedHeights() {
+        var saved = [];
+        slides.forEach(function(slide, si) {
+            var wasActive = slide.classList.contains('active');
+            if (!wasActive) {
+                slide.style.display = 'flex';
+                slide.style.visibility = 'hidden';
+                slide.style.position = 'absolute';
+                slide.style.width = '100%';
+                slide.style.left = '0';
+            }
+            var msgs = slide.querySelectorAll('.demo-msg');
+            var checks = slide.querySelectorAll('.demo-check');
+            msgs.forEach(function(m) { m.style.display = 'flex'; });
+            checks.forEach(function(c) { c.style.display = 'flex'; });
+            saved.push({ wasActive: wasActive, msgs: msgs, checks: checks });
+        });
+
+        var maxEmail = 0, maxViz = 0, maxChecks = 0;
+        slides.forEach(function(slide) {
+            var e = slide.querySelector('.demo-slide-email');
+            var v = slide.querySelector('.demo-slide-viz');
+            var c = slide.querySelector('.demo-slide-checks');
+            if (e) maxEmail = Math.max(maxEmail, e.offsetHeight);
+            if (v) maxViz = Math.max(maxViz, v.offsetHeight);
+            if (c) maxChecks = Math.max(maxChecks, c.offsetHeight);
+        });
+
+        slides.forEach(function(slide, si) {
+            var e = slide.querySelector('.demo-slide-email');
+            var v = slide.querySelector('.demo-slide-viz');
+            var c = slide.querySelector('.demo-slide-checks');
+            if (e) e.style.minHeight = maxEmail + 'px';
+            if (v) v.style.minHeight = maxViz + 'px';
+            if (c) c.style.minHeight = maxChecks + 'px';
+            if (!saved[si].wasActive) {
+                slide.style.display = '';
+                slide.style.visibility = '';
+                slide.style.position = '';
+                slide.style.width = '';
+                slide.style.left = '';
+            }
+            saved[si].msgs.forEach(function(m) { m.style.display = ''; });
+            saved[si].checks.forEach(function(c) { c.style.display = ''; });
+        });
+    })();
 })();
 </script>
 
