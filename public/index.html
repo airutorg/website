@@ -563,6 +563,18 @@
             100% { opacity: 0; }
         }
 
+        @keyframes svgBubble1 {
+            0%, 10% { opacity: 0; transform: scale(0.7) translateY(4px); }
+            20%, 85% { opacity: 1; transform: scale(1) translateY(0); }
+            95%, 100% { opacity: 0; transform: scale(0.7) translateY(4px); }
+        }
+
+        @keyframes svgBubble2 {
+            0%, 30% { opacity: 0; transform: scale(0.7) translateY(4px); }
+            40%, 85% { opacity: 1; transform: scale(1) translateY(0); }
+            95%, 100% { opacity: 0; transform: scale(0.7) translateY(4px); }
+        }
+
         /* ---- Key features list ---- */
         .key-features {
             display: grid;
@@ -970,6 +982,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="demo-msg" id="demo-msg-4">
+                        <div class="demo-msg-avatar demo-avatar-user">P</div>
+                        <div class="demo-msg-content">
+                            <div><span class="demo-msg-from">Pyry Haulos</span><span class="demo-msg-to">to airut</span></div>
+                            <div class="demo-msg-body">Looks good. Please merge.</div>
+                        </div>
+                    </div>
+                    <div class="demo-msg" id="demo-msg-5">
+                        <div class="demo-msg-avatar demo-avatar-airut">A</div>
+                        <div class="demo-msg-content">
+                            <div><span class="demo-msg-from">Airut</span><span class="demo-msg-to">to pyry</span></div>
+                            <div class="demo-msg-body">Merged and deployed to production.</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="demo-anim">
                     <div class="demo-anim-panel">
@@ -1109,6 +1135,50 @@
                             <text x="240" y="158" fill="var(--text-primary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" font-weight="500">Lint</text>
                             <polyline points="354,148 358,153 366,143" fill="none" stroke="var(--status-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="18" style="animation: svgDraw3 4s ease infinite"/>
                         </svg>
+                        <!-- SVG 4: Review, approve, deploy -->
+                        <svg id="demo-svg-4" class="demo-anim-svg" viewBox="0 0 420 200" role="img" aria-label="Review PR, approve, and deploy">
+                            <rect x="12" y="20" width="110" height="160" rx="6" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1.5"/>
+                            <g stroke="var(--border)" stroke-width="1.5" stroke-linecap="round">
+                                <line x1="28" y1="42" x2="106" y2="42"/>
+                                <line x1="28" y1="54" x2="92" y2="54"/>
+                                <line x1="28" y1="66" x2="100" y2="66"/>
+                            </g>
+                            <g style="animation: svgBubble1 5s ease-in-out infinite">
+                                <rect x="28" y="82" width="78" height="28" rx="4" fill="var(--accent-subtle)" stroke="var(--accent)" stroke-width="1"/>
+                                <g stroke="var(--accent)" stroke-width="1" stroke-linecap="round" opacity="0.6">
+                                    <line x1="36" y1="93" x2="72" y2="93"/>
+                                    <line x1="36" y1="101" x2="62" y2="101"/>
+                                </g>
+                            </g>
+                            <g style="animation: svgBubble2 5s ease-in-out infinite">
+                                <rect x="28" y="118" width="78" height="28" rx="4" fill="var(--accent-subtle)" stroke="var(--accent)" stroke-width="1"/>
+                                <g stroke="var(--accent)" stroke-width="1" stroke-linecap="round" opacity="0.6">
+                                    <line x1="36" y1="129" x2="82" y2="129"/>
+                                    <line x1="36" y1="137" x2="68" y2="137"/>
+                                </g>
+                            </g>
+                            <line x1="134" y1="100" x2="172" y2="100" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" fill="none" style="animation: svgFlow 0.6s linear infinite"/>
+                            <polygon points="176,100 168,95 168,105" fill="var(--accent)"/>
+                            <rect x="186" y="46" width="86" height="108" rx="6" fill="var(--bg-surface)" stroke="var(--status-success)" stroke-width="1.5"/>
+                            <g transform="translate(229,78)">
+                                <circle cx="0" cy="0" r="18" fill="var(--status-success-subtle)" stroke="var(--status-success)" stroke-width="1.5"/>
+                                <polyline points="-8,0 -3,6 9,-6" fill="none" stroke="var(--status-success)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <text x="229" y="114" text-anchor="middle" fill="var(--status-success)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" font-weight="600">Approved</text>
+                            <text x="229" y="130" text-anchor="middle" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9">Merge</text>
+                            <line x1="282" y1="100" x2="320" y2="100" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" fill="none" style="animation: svgFlow 0.6s linear infinite"/>
+                            <polygon points="324,100 316,95 316,105" fill="var(--accent)"/>
+                            <g transform="translate(370,100)">
+                                <circle cx="0" cy="0" r="34" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1.5"/>
+                                <g fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="0" y1="12" x2="0" y2="-14"/>
+                                    <polyline points="-8,-6 0,-14 8,-6"/>
+                                </g>
+                                <path d="M -14,6 A 8,8 0 0,1 -6,-2 A 10,10 0 0,1 6,-2 A 8,8 0 0,1 14,6 Z" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.4"/>
+                            </g>
+                            <circle cx="370" cy="100" r="34" fill="none" stroke="var(--accent)" stroke-width="1" opacity="0.3" style="animation: svgPulse 2s ease-in-out infinite"/>
+                            <text x="370" y="148" text-anchor="middle" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" font-weight="500">Deploy</text>
+                        </svg>
                     </div>
                 </div>
                 <div class="demo-hood">Under the hood</div>
@@ -1124,6 +1194,10 @@
                     <div class="demo-step" id="demo-s3">
                         <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
                         <span class="demo-step-text">CI checks passing in sandbox</span>
+                    </div>
+                    <div class="demo-step" id="demo-s4">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Merged and deployed</span>
                     </div>
                 </div>
                 <div class="demo-footer">
@@ -1339,17 +1413,21 @@
     var msgs = [
         document.getElementById('demo-msg-1'),
         document.getElementById('demo-msg-2'),
-        document.getElementById('demo-msg-3')
+        document.getElementById('demo-msg-3'),
+        document.getElementById('demo-msg-4'),
+        document.getElementById('demo-msg-5')
     ];
     var steps = [
         document.getElementById('demo-s1'),
         document.getElementById('demo-s2'),
-        document.getElementById('demo-s3')
+        document.getElementById('demo-s3'),
+        document.getElementById('demo-s4')
     ];
     var svgs = [
         document.getElementById('demo-svg-1'),
         document.getElementById('demo-svg-2'),
-        document.getElementById('demo-svg-3')
+        document.getElementById('demo-svg-3'),
+        document.getElementById('demo-svg-4')
     ];
     var replay = document.getElementById('demo-replay');
     var timers = [];
@@ -1397,11 +1475,21 @@
         at(function() { activate(steps[2]); }, 6100);
         at(function() { done(steps[2]); }, 6800);
 
-        // Final Airut reply with PR details
+        // Airut reply with PR details
         at(function() { show(msgs[2]); }, 7100);
 
+        // User approves: "Looks good. Please merge."
+        at(function() { show(msgs[3]); }, 8000);
+
+        // Step 4: Merging and deploying — switch to deploy diagram
+        at(function() { activate(steps[3]); showSvg(3); }, 8700);
+        at(function() { done(steps[3]); }, 9500);
+
+        // Airut confirms merge and deploy
+        at(function() { show(msgs[4]); }, 9800);
+
         // Replay button
-        at(function() { show(replay); }, 7800);
+        at(function() { show(replay); }, 10500);
     }
 
     var observer = new IntersectionObserver(function(entries) {
