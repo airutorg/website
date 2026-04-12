@@ -971,14 +971,17 @@
                                 <div class="demo-msg-avatar demo-avatar-user">P</div>
                                 <div class="demo-msg-content">
                                     <div><span class="demo-msg-from">Pyry Haulos</span><span class="demo-msg-to">to airut</span></div>
-                                    <div class="demo-msg-body">Can you put together a proposal for adding a /health endpoint? It should return the service version and uptime.</div>
+                                    <div class="demo-msg-body">
+                                        <p>Can you put together a proposal for adding a /health endpoint?</p>
+                                        <p>It should return the service version and uptime.</p>
+                                    </div>
                                 </div>
                             </div>
                             <div class="demo-msg">
                                 <div class="demo-msg-avatar demo-avatar-airut">A</div>
                                 <div class="demo-msg-content">
                                     <div><span class="demo-msg-from">Airut</span><span class="demo-msg-to">to pyry</span></div>
-                                    <div class="demo-msg-body">On it &mdash; setting up a workspace and getting started.</div>
+                                    <div class="demo-msg-body">I&rsquo;ve started working on this and will reply shortly.</div>
                                 </div>
                             </div>
                         </div>
@@ -1233,7 +1236,10 @@
                                 <div class="demo-msg-avatar demo-avatar-airut">A</div>
                                 <div class="demo-msg-content">
                                     <div><span class="demo-msg-from">Airut</span><span class="demo-msg-to">to pyry</span></div>
-                                    <div class="demo-msg-body">Merged and deployed to production. The /health endpoint is live.</div>
+                                    <div class="demo-msg-body">
+                                        <p>Merged and deployed to production. The /health endpoint is live &mdash; you can verify with:</p>
+                                        <p><code style="background: var(--bg-code); padding: 0.0625rem 0.25rem; border-radius: 3px; font-size: 0.75rem; font-family: 'SF Mono', Menlo, Consolas, monospace;">curl https://api.acme.com/health</code></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1533,9 +1539,11 @@
         checks.forEach(function(c) { c.classList.remove('visible', 'active', 'done'); });
     }
 
-    // Slides 0,1: both messages are a conversation exchange, then work starts
-    // Slides 2,3: first message triggers work, result message appears after
-    var replyBeforeChecks = [true, true, false, false];
+    // When to show the reply (second message) relative to checks:
+    //   0: after check 0 completes (slide 0: programmatic auto-reply after DMARC)
+    //   'before': before any checks (slide 1: user says "go ahead")
+    //   'after': after all checks (slides 2,3: result message)
+    var replyTiming = [0, 'before', 'after', 'after'];
 
     function animateSlide(index) {
         timers.forEach(clearTimeout);
@@ -1544,12 +1552,13 @@
         resetSlide(slide);
         var msgs = [].slice.call(slide.querySelectorAll('.demo-msg'));
         var checks = [].slice.call(slide.querySelectorAll('.demo-check'));
+        var timing = replyTiming[index];
 
         // Show first message
         at(function() { msgs[0].classList.add('visible'); }, 200);
 
-        // Show reply before checks on conversation-exchange slides
-        if (replyBeforeChecks[index] && msgs.length > 1) {
+        // Show reply before checks
+        if (timing === 'before' && msgs.length > 1) {
             at(function() { msgs[1].classList.add('visible'); }, 800);
         }
 
@@ -1566,9 +1575,15 @@
             }, checkDelay + i * checkDuration + checkDuration - 200);
         });
 
-        // Show reply after checks on result slides
+        // Show reply after a specific check completes
+        if (typeof timing === 'number' && msgs.length > 1) {
+            var afterCheck = checkDelay + (timing + 1) * checkDuration;
+            at(function() { msgs[1].classList.add('visible'); }, afterCheck);
+        }
+
+        // Show reply after all checks
         var afterChecks = checkDelay + checks.length * checkDuration + 200;
-        if (!replyBeforeChecks[index] && msgs.length > 1) {
+        if (timing === 'after' && msgs.length > 1) {
             at(function() { msgs[1].classList.add('visible'); }, afterChecks);
         }
 
