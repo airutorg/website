@@ -253,95 +253,245 @@
             max-width: 560px;
         }
 
-        /* ---- Workflow steps ---- */
-        .workflow-steps {
-            display: grid;
-            gap: 2.5rem;
+        /* ---- Demo animation ---- */
+        .demo {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
         }
 
-        .step {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+        .demo-header {
+            display: flex;
             align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-light);
+            background: var(--bg-feature);
         }
 
-        .step:nth-child(odd) {
-            direction: rtl;
+        .demo-header-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
         }
 
-        .step:nth-child(odd) > * {
-            direction: ltr;
+        .demo-header-title {
+            margin-left: 8px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-secondary);
         }
 
-        .step-illustration {
+        .demo-thread {
+            padding: 4px 16px;
+        }
+
+        .demo-msg {
+            display: flex;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .demo-msg:last-child {
+            border-bottom: none;
+        }
+
+        .demo-msg.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .demo-msg-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            color: #fff;
         }
 
-        .step-illustration img {
-            width: 100%;
-            height: auto;
-            display: block;
+        .demo-avatar-user { background: #6b7280; }
+        .demo-avatar-airut { background: var(--accent); }
+
+        .demo-msg-content { min-width: 0; }
+
+        .demo-msg-from {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
-        @media (prefers-color-scheme: dark) {
-            .step-illustration img {
-                filter: invert(1) hue-rotate(180deg);
-            }
+        .demo-msg-to {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-left: 6px;
         }
 
-        .step-content {
-            padding-top: 0;
+        .demo-msg-body {
+            margin-top: 4px;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
         }
 
-        .step-header {
+        .demo-msg-body p {
+            margin-bottom: 6px;
+        }
+
+        .demo-msg-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .demo-pr {
+            display: inline-block;
+            margin: 4px 0;
+            padding: 6px 10px;
+            background: var(--bg-feature);
+            border: 1px solid var(--border-light);
+            border-radius: 5px;
+        }
+
+        .demo-pr-title {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .demo-pr-meta {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            margin-left: 6px;
+        }
+
+        .demo-hood {
+            padding: 8px 16px;
+            background: var(--bg-feature);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-tertiary);
+        }
+
+        .demo-steps {
+            padding: 12px 16px;
+        }
+
+        .demo-step {
             display: flex;
             align-items: center;
-            gap: 0.625rem;
-            margin-bottom: 0.375rem;
+            gap: 10px;
+            padding: 6px 0;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        .step-diamond {
-            width: 1.75rem;
-            height: 1.75rem;
-            background: var(--accent-subtle);
-            border: 1.5px solid var(--accent);
-            transform: rotate(45deg);
+        .demo-step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .demo-step-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            position: relative;
+            transition: border-color 0.3s, background 0.3s;
         }
 
-        .step-diamond span {
-            transform: rotate(-45deg);
-            font-weight: 700;
-            font-size: 0.75rem;
-            color: var(--accent);
-            line-height: 1;
+        .demo-step.done .demo-step-dot {
+            border-color: var(--status-success);
+            background: var(--status-success-subtle);
         }
 
-        .step-title {
-            font-weight: 600;
-            font-size: 1.0625rem;
+        .demo-step.active .demo-step-dot {
+            border-color: var(--accent);
+            background: var(--accent-subtle);
         }
 
-        .step-desc {
-            font-size: 0.875rem;
+        .demo-step.active .demo-step-dot::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border: 1.5px solid transparent;
+            border-top-color: var(--accent);
+            border-right-color: var(--accent);
+            border-radius: 50%;
+            animation: demo-spin 0.7s linear infinite;
+        }
+
+        @keyframes demo-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .demo-step-check {
+            width: 10px;
+            height: 10px;
+            color: var(--status-success);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .demo-step.done .demo-step-check {
+            opacity: 1;
+        }
+
+        .demo-step-text {
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+            transition: color 0.3s;
+        }
+
+        .demo-step.active .demo-step-text,
+        .demo-step.done .demo-step-text {
             color: var(--text-secondary);
-            line-height: 1.6;
         }
 
-        @media (max-width: 600px) {
-            .step {
-                grid-template-columns: 1fr;
-            }
+        .demo-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: 4px 16px 12px;
+        }
 
-            .step:nth-child(odd) {
-                direction: ltr;
-            }
+        .demo-replay {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-family: inherit;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s, color 0.15s, border-color 0.15s;
+        }
+
+        .demo-replay.visible {
+            opacity: 1;
+        }
+
+        .demo-replay:hover {
+            color: var(--accent);
+            border-color: var(--accent);
         }
 
         /* ---- Key features list ---- */
@@ -714,55 +864,69 @@
         <section class="section">
             <p class="section-label">How it works</p>
             <h2>Message-to-deploy workflow</h2>
-            <p class="section-intro">Email and Slack provide threading, search, notifications, and mobile clients out of the box. No terminal sessions to maintain, no custom clients to install.</p>
-            <div class="workflow-steps">
-                <div class="step">
-                    <div class="step-illustration">
-                        <img src="/assets/airut_step1.svg" alt="Airut creates an isolated workspace per conversation" loading="lazy">
-                    </div>
-                    <div class="step-content">
-                        <div class="step-header">
-                            <div class="step-diamond"><span>1</span></div>
-                            <p class="step-title">Send a message, get an isolated workspace</p>
+            <p class="section-intro">Send an email or Slack message, get back a pull request. No terminal sessions or custom clients needed.</p>
+            <div class="demo">
+                <div class="demo-header">
+                    <span class="demo-header-dot"></span>
+                    <span class="demo-header-dot"></span>
+                    <span class="demo-header-dot"></span>
+                    <span class="demo-header-title">Add /health endpoint</span>
+                </div>
+                <div class="demo-thread">
+                    <div class="demo-msg" id="demo-msg-1">
+                        <div class="demo-msg-avatar demo-avatar-user">P</div>
+                        <div class="demo-msg-content">
+                            <div><span class="demo-msg-from">Pyry Haulos</span><span class="demo-msg-to">to airut</span></div>
+                            <div class="demo-msg-body">Add a /health endpoint that returns the service version and uptime.</div>
                         </div>
-                        <p class="step-desc">Describe your task in plain language over email or Slack. Airut creates a dedicated workspace for each conversation, cloning your repository into an isolated environment. Claude Code starts working immediately.</p>
+                    </div>
+                    <div class="demo-msg" id="demo-msg-2">
+                        <div class="demo-msg-avatar demo-avatar-airut">A</div>
+                        <div class="demo-msg-content">
+                            <div><span class="demo-msg-from">Airut</span><span class="demo-msg-to">to pyry</span></div>
+                            <div class="demo-msg-body">I've started working on this and will reply shortly.</div>
+                        </div>
+                    </div>
+                    <div class="demo-msg" id="demo-msg-3">
+                        <div class="demo-msg-avatar demo-avatar-airut">A</div>
+                        <div class="demo-msg-content">
+                            <div><span class="demo-msg-from">Airut</span><span class="demo-msg-to">to pyry</span></div>
+                            <div class="demo-msg-body">
+                                <p>Done &mdash; PR ready for review.</p>
+                                <div class="demo-pr">
+                                    <span class="demo-pr-title">Add /health endpoint</span>
+                                    <span class="demo-pr-meta">&middot; acme/api#42 &middot; CI &#10003;</span>
+                                </div>
+                                <p>Added <code style="background: var(--bg-code); padding: 0.0625rem 0.25rem; border-radius: 3px; font-size: 0.75rem; font-family: 'SF Mono', Menlo, Consolas, monospace;">GET /health</code> returning version and uptime as JSON. Tests included.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="step">
-                    <div class="step-illustration">
-                        <img src="/assets/airut_step2.svg" alt="Claude Code runs in a sandboxed environment" loading="lazy">
+                <div class="demo-hood">Under the hood</div>
+                <div class="demo-steps">
+                    <div class="demo-step" id="demo-s1">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Authenticating sender via DMARC</span>
                     </div>
-                    <div class="step-content">
-                        <div class="step-header">
-                            <div class="step-diamond"><span>2</span></div>
-                            <p class="step-title">Sandboxed execution with credential isolation</p>
-                        </div>
-                        <p class="step-desc">Claude Code runs inside an Airut sandbox. It can iterate with you over email or Slack, modify the workspace, and access the network &mdash; but only through a proxy that enforces allowlists and swaps surrogate credentials for real ones. The agent never holds credentials usable outside the sandbox.</p>
+                    <div class="demo-step" id="demo-s2">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Provisioning isolated container</span>
+                    </div>
+                    <div class="demo-step" id="demo-s3">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Cloning repository into sandbox</span>
+                    </div>
+                    <div class="demo-step" id="demo-s4">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Running Claude Code</span>
+                    </div>
+                    <div class="demo-step" id="demo-s5">
+                        <div class="demo-step-dot"><svg class="demo-step-check" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5.5 4.5 8 8 2.5"/></svg></div>
+                        <span class="demo-step-text">Opening pull request</span>
                     </div>
                 </div>
-                <div class="step">
-                    <div class="step-illustration">
-                        <img src="/assets/airut_step3.svg" alt="Pull request with sandboxed CI/CD" loading="lazy">
-                    </div>
-                    <div class="step-content">
-                        <div class="step-header">
-                            <div class="step-diamond"><span>3</span></div>
-                            <p class="step-title">Pull request with sandboxed CI</p>
-                        </div>
-                        <p class="step-desc">Claude Code pushes a PR when ready. Your CI/CD pipeline runs the agent-authored code &mdash; but the untrusted build and test commands execute inside an Airut sandbox too. CI runners are protected from exfiltration just like the workspace.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-illustration">
-                        <img src="/assets/airut_step4.svg" alt="Review, approve, and deploy" loading="lazy">
-                    </div>
-                    <div class="step-content">
-                        <div class="step-header">
-                            <div class="step-diamond"><span>4</span></div>
-                            <p class="step-title">Review, approve, deploy</p>
-                        </div>
-                        <p class="step-desc">Review the PR, leave comments, and iterate via the thread. When satisfied, approve and merge. With CI/CD in place, merging deploys automatically. Multiple conversations run in parallel, each fully isolated.</p>
-                    </div>
+                <div class="demo-footer">
+                    <button class="demo-replay" id="demo-replay">Replay</button>
                 </div>
             </div>
         </section>
@@ -965,6 +1129,78 @@
             <p class="footer-note">Created by <a href="https://haulos.com" style="color: var(--text-tertiary); text-decoration: none;">Pyry Haulos</a></p>
         </footer>
     </div>
+
+<script>
+(function() {
+    var demo = document.querySelector('.demo');
+    if (!demo) return;
+
+    var msgs = [
+        document.getElementById('demo-msg-1'),
+        document.getElementById('demo-msg-2'),
+        document.getElementById('demo-msg-3')
+    ];
+    var steps = [
+        document.getElementById('demo-s1'),
+        document.getElementById('demo-s2'),
+        document.getElementById('demo-s3'),
+        document.getElementById('demo-s4'),
+        document.getElementById('demo-s5')
+    ];
+    var replay = document.getElementById('demo-replay');
+    var timers = [];
+
+    function at(fn, ms) { timers.push(setTimeout(fn, ms)); }
+    function show(el) { el.classList.add('visible'); }
+    function activate(el) { el.classList.add('visible', 'active'); }
+    function done(el) { el.classList.remove('active'); el.classList.add('done'); }
+
+    function reset() {
+        timers.forEach(clearTimeout);
+        timers = [];
+        msgs.forEach(function(m) { m.classList.remove('visible'); });
+        steps.forEach(function(s) { s.classList.remove('visible', 'active', 'done'); });
+        replay.classList.remove('visible');
+    }
+
+    function play() {
+        reset();
+
+        at(function() { show(msgs[0]); }, 300);
+
+        at(function() { activate(steps[0]); }, 1000);
+        at(function() { done(steps[0]); }, 1500);
+
+        at(function() { activate(steps[1]); }, 1600);
+        at(function() { done(steps[1]); }, 2200);
+
+        at(function() { activate(steps[2]); }, 2300);
+        at(function() { done(steps[2]); }, 2900);
+
+        at(function() { show(msgs[1]); }, 3100);
+
+        at(function() { activate(steps[3]); }, 3300);
+        at(function() { done(steps[3]); }, 5500);
+
+        at(function() { activate(steps[4]); }, 5600);
+        at(function() { done(steps[4]); }, 6400);
+
+        at(function() { show(msgs[2]); }, 6700);
+
+        at(function() { show(replay); }, 7400);
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+            play();
+            observer.disconnect();
+        }
+    }, { threshold: 0.2 });
+
+    observer.observe(demo);
+    replay.addEventListener('click', play);
+})();
+</script>
 
 </body>
 </html>
