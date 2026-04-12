@@ -292,13 +292,10 @@
         }
 
         .demo-msg {
-            display: flex;
+            display: none;
             gap: 12px;
             padding: 14px 0;
             border-bottom: 1px solid var(--border-light);
-            opacity: 0;
-            transform: translateY(8px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
         .demo-msg:last-child {
@@ -306,8 +303,8 @@
         }
 
         .demo-msg.visible {
-            opacity: 1;
-            transform: translateY(0);
+            display: flex;
+            animation: demoFadeIn 0.4s ease forwards;
         }
 
         .demo-msg-avatar {
@@ -394,18 +391,15 @@
         }
 
         .demo-step {
-            display: flex;
+            display: none;
             align-items: center;
             gap: 10px;
             padding: 6px 0;
-            opacity: 0;
-            transform: translateY(6px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         .demo-step.visible {
-            opacity: 1;
-            transform: translateY(0);
+            display: flex;
+            animation: demoFadeIn 0.3s ease forwards;
         }
 
         .demo-step-dot {
@@ -445,6 +439,11 @@
 
         @keyframes demo-spin {
             to { transform: rotate(360deg); }
+        }
+
+        @keyframes demoFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .demo-step-check {
