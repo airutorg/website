@@ -844,36 +844,32 @@
                             <!-- Network sandbox (outer dashed) -->
                             <rect x="5" y="5" width="430" height="270" rx="8" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="8 4"/>
                             <text x="18" y="23" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" font-weight="600" letter-spacing="0.06em">NETWORK SANDBOX</text>
-                            <!-- Credential swap (top, animated) -->
-                            <!-- Surrogate key icon (from execution sandbox) -->
-                            <g fill="none" stroke="var(--text-tertiary)" stroke-width="1.2" stroke-linecap="round">
-                                <circle cx="86" cy="38" r="3.5"/>
-                                <line x1="89.5" y1="38" x2="100" y2="38"/>
-                                <line x1="96" y1="38" x2="96" y2="42"/>
-                            </g>
+                            <!-- Credential swap (top, animated traveling keys) -->
                             <text x="76" y="50" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="7">surrogate</text>
-                            <!-- Animated flow line for credential swap -->
-                            <line x1="104" y1="38" x2="222" y2="38" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 3" style="animation: svgFlow 0.6s linear infinite"/>
-                            <polygon points="226,38 218,34 218,42" fill="var(--accent)"/>
-                            <!-- Real key icon (at proxy) -->
-                            <g fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round">
-                                <circle cx="236" cy="38" r="3.5"/>
-                                <line x1="239.5" y1="38" x2="250" y2="38"/>
-                                <line x1="246" y1="38" x2="246" y2="42"/>
-                                <line x1="249" y1="38" x2="249" y2="41"/>
+                            <text x="244" y="50" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="7">real key</text>
+                            <!-- Surrogate key travels from execution sandbox to proxy, fades out -->
+                            <g>
+                                <circle cx="0" cy="0" r="3.5" fill="none" stroke="var(--text-tertiary)" stroke-width="1.2"/>
+                                <line x1="3.5" y1="0" x2="14" y2="0" stroke="var(--text-tertiary)" stroke-width="1.2" stroke-linecap="round"/>
+                                <line x1="10" y1="0" x2="10" y2="4" stroke="var(--text-tertiary)" stroke-width="1.2" stroke-linecap="round"/>
+                                <animateMotion dur="4s" repeatCount="indefinite" path="M 86,38 L 224,38" keyPoints="0;1;1;1" keyTimes="0;0.45;0.55;1" calcMode="linear"/>
+                                <animate attributeName="opacity" dur="4s" repeatCount="indefinite" values="1;1;0;0" keyTimes="0;0.4;0.55;1"/>
                             </g>
-                            <text x="230" y="50" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="7">real key</text>
-                            <!-- Animated credential particle -->
-                            <circle r="2" fill="var(--accent)" style="animation: svgParticle 2.5s linear infinite">
-                                <animateMotion dur="2.5s" repeatCount="indefinite" path="M 86,38 L 236,38"/>
-                            </circle>
+                            <!-- Real key appears at proxy, continues right, fades out -->
+                            <g>
+                                <circle cx="0" cy="0" r="3.5" fill="none" stroke="var(--accent)" stroke-width="1.2"/>
+                                <line x1="3.5" y1="0" x2="14" y2="0" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round"/>
+                                <line x1="10" y1="0" x2="10" y2="4" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round"/>
+                                <line x1="13" y1="0" x2="13" y2="3" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round"/>
+                                <animateMotion dur="4s" repeatCount="indefinite" path="M 224,38 L 296,38" keyPoints="0;0;1;1" keyTimes="0;0.55;0.85;1" calcMode="linear"/>
+                                <animate attributeName="opacity" dur="4s" repeatCount="indefinite" values="0;0;1;1;0" keyTimes="0;0.5;0.6;0.85;1"/>
+                            </g>
                             <!-- Execution sandbox (inner dashed) -->
                             <rect x="14" y="56" width="160" height="174" rx="6" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
                             <text x="26" y="72" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="8.5" font-weight="600" letter-spacing="0.06em" opacity="0.8">EXECUTION SANDBOX</text>
                             <!-- Terminal inside execution sandbox -->
                             <rect x="22" y="80" width="144" height="114" rx="4" fill="var(--bg-code)" stroke="var(--border)" stroke-width="1"/>
                             <text x="32" y="100" fill="var(--accent)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">$ claude -p "task"</text>
-                            <rect x="148" y="91" width="5" height="9" rx="1" fill="var(--accent)" style="animation: svgBlink 1s step-end infinite"/>
                             <text x="32" y="116" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x25B8; Read src/app.ts</text>
                             <text x="32" y="132" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x25B8; Edit src/app.ts</text>
                             <text x="32" y="148" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x25B8; Run npm test</text>
