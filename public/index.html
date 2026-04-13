@@ -840,20 +840,16 @@
                 </div>
                 <div class="step">
                     <div class="step-illustration">
-                        <svg viewBox="0 0 440 280" class="step-diagram" role="img" aria-label="Execution sandbox nested inside network sandbox with proxy">
-                            <!-- Network sandbox (outer dashed) -->
-                            <rect x="5" y="5" width="430" height="270" rx="8" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="8 4"/>
-                            <text x="18" y="23" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" font-weight="600" letter-spacing="0.06em">NETWORK SANDBOX</text>
+                        <svg viewBox="0 0 420 184" class="step-diagram" role="img" aria-label="Execution sandbox with proxy, credential swap, and network filtering">
                             <!-- Credential swap (animated keys centered on proxy) -->
-                            <!-- Labels above key paths -->
-                            <text x="234" y="92" text-anchor="middle" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="7">surrogate</text>
-                            <text x="284" y="92" text-anchor="middle" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="7">real key</text>
+                            <text x="224" y="42" text-anchor="middle" fill="var(--text-tertiary)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="7">surrogate</text>
+                            <text x="274" y="42" text-anchor="middle" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="7">real key</text>
                             <!-- Surrogate key travels to proxy center (50px), fades out -->
                             <g>
                                 <circle cx="0" cy="0" r="3.5" fill="none" stroke="var(--text-tertiary)" stroke-width="1.2"/>
                                 <line x1="3.5" y1="0" x2="14" y2="0" stroke="var(--text-tertiary)" stroke-width="1.2" stroke-linecap="round"/>
                                 <line x1="10" y1="0" x2="10" y2="4" stroke="var(--text-tertiary)" stroke-width="1.2" stroke-linecap="round"/>
-                                <animateMotion dur="4s" repeatCount="indefinite" path="M 209,100 L 259,100" keyPoints="0;0;1;1;1" keyTimes="0;0.05;0.40;0.50;1" calcMode="linear"/>
+                                <animateMotion dur="4s" repeatCount="indefinite" path="M 199,50 L 249,50" keyPoints="0;0;1;1;1" keyTimes="0;0.05;0.40;0.50;1" calcMode="linear"/>
                                 <animate attributeName="opacity" dur="4s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.05;0.40;0.50;1"/>
                             </g>
                             <!-- Real key appears at proxy center, travels out (50px) -->
@@ -862,59 +858,59 @@
                                 <line x1="3.5" y1="0" x2="14" y2="0" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round"/>
                                 <line x1="10" y1="0" x2="10" y2="4" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round"/>
                                 <line x1="13" y1="0" x2="13" y2="3" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round"/>
-                                <animateMotion dur="4s" repeatCount="indefinite" path="M 259,100 L 309,100" keyPoints="0;0;0;1;1" keyTimes="0;0.50;0.55;0.90;1" calcMode="linear"/>
+                                <animateMotion dur="4s" repeatCount="indefinite" path="M 249,50 L 299,50" keyPoints="0;0;0;1;1" keyTimes="0;0.50;0.55;0.90;1" calcMode="linear"/>
                                 <animate attributeName="opacity" dur="4s" repeatCount="indefinite" values="0;0;1;1;0" keyTimes="0;0.50;0.55;0.90;1"/>
                             </g>
-                            <!-- Execution sandbox (inner dashed) -->
-                            <rect x="14" y="56" width="160" height="174" rx="6" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
-                            <text x="26" y="72" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="8.5" font-weight="600" letter-spacing="0.06em" opacity="0.8">EXECUTION SANDBOX</text>
+                            <!-- Execution sandbox (dashed) -->
+                            <rect x="4" y="6" width="160" height="174" rx="6" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+                            <text x="16" y="22" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="8.5" font-weight="600" letter-spacing="0.06em" opacity="0.8">EXECUTION SANDBOX</text>
                             <!-- Terminal inside execution sandbox -->
-                            <rect x="22" y="80" width="144" height="114" rx="4" fill="var(--bg-code)" stroke="var(--border)" stroke-width="1"/>
-                            <text x="32" y="100" fill="var(--accent)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">$ claude -p "task"</text>
-                            <text x="32" y="116" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x25B8; Read src/app.ts</text>
-                            <text x="32" y="132" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x25B8; Edit src/app.ts</text>
-                            <text x="32" y="148" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x25B8; Run npm test</text>
-                            <text x="32" y="164" fill="var(--status-success)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x2713; 3 tests passed</text>
+                            <rect x="12" y="30" width="144" height="114" rx="4" fill="var(--bg-code)" stroke="var(--border)" stroke-width="1"/>
+                            <text x="22" y="50" fill="var(--accent)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">$ claude -p "task"</text>
+                            <text x="22" y="66" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x25B8; Read src/app.ts</text>
+                            <text x="22" y="82" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x25B8; Edit src/app.ts</text>
+                            <text x="22" y="98" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x25B8; Run npm test</text>
+                            <text x="22" y="114" fill="var(--status-success)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="9">&#x2713; 3 tests passed</text>
                             <!-- File tree below terminal -->
-                            <g transform="translate(28,204)" stroke="var(--text-tertiary)" stroke-width="1" fill="none" stroke-linecap="round">
+                            <g transform="translate(18,154)" stroke="var(--text-tertiary)" stroke-width="1" fill="none" stroke-linecap="round">
                                 <path d="M 0,0 L 0,11 L 13,11 L 13,3 L 7.5,3 L 5.5,0 Z"/>
                                 <text x="17" y="9" fill="var(--text-tertiary)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="8" stroke="none">repo/</text>
                             </g>
-                            <!-- Flow from execution sandbox to proxy (crosses inner border) -->
-                            <line x1="174" y1="142" x2="214" y2="142" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" style="animation: svgFlow 0.6s linear infinite"/>
-                            <polygon points="218,142 210,137 210,147" fill="var(--accent)"/>
-                            <!-- Proxy box (outside execution sandbox, inside network sandbox) -->
-                            <rect x="224" y="108" width="70" height="70" rx="6" fill="var(--accent-subtle)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <!-- Flow from execution sandbox to proxy -->
+                            <line x1="164" y1="92" x2="204" y2="92" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" style="animation: svgFlow 0.6s linear infinite"/>
+                            <polygon points="208,92 200,87 200,97" fill="var(--accent)"/>
+                            <!-- Proxy box -->
+                            <rect x="214" y="58" width="70" height="70" rx="6" fill="var(--accent-subtle)" stroke="var(--accent)" stroke-width="1.5"/>
                             <!-- Lock icon -->
-                            <g transform="translate(259,132)" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <g transform="translate(249,82)" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="-11" y="-3" width="22" height="16" rx="2"/>
                                 <path d="M -7,-3 L -7,-8 A 7,7 0 0,1 7,-8 L 7,-3"/>
                                 <circle cx="0" cy="5" r="2" fill="var(--accent)"/>
                             </g>
-                            <text x="259" y="164" text-anchor="middle" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" font-weight="600">PROXY</text>
+                            <text x="249" y="114" text-anchor="middle" fill="var(--accent)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" font-weight="600">PROXY</text>
                             <!-- Allowed path (upper-right, ~-33 degrees) -->
-                            <line x1="298" y1="126" x2="336" y2="100" stroke="var(--status-success)" stroke-width="1.5" stroke-dasharray="6 4" style="animation: svgFlow 0.6s linear infinite"/>
-                            <polygon points="-7,-4 0,0 -7,4" transform="translate(339,98) rotate(-34)" fill="var(--status-success)"/>
+                            <line x1="288" y1="76" x2="326" y2="50" stroke="var(--status-success)" stroke-width="1.5" stroke-dasharray="6 4" style="animation: svgFlow 0.6s linear infinite"/>
+                            <polygon points="-7,-4 0,0 -7,4" transform="translate(329,48) rotate(-34)" fill="var(--status-success)"/>
                             <!-- Flow particle on allowed path -->
                             <circle r="2.5" fill="var(--status-success)" style="animation: svgParticle 3s linear infinite">
-                                <animateMotion dur="3s" repeatCount="indefinite" path="M 174,142 L 218,142 L 259,142 L 298,126 L 339,98"/>
+                                <animateMotion dur="3s" repeatCount="indefinite" path="M 164,92 L 208,92 L 249,92 L 288,76 L 329,48"/>
                             </circle>
                             <!-- Allowed host box -->
-                            <rect x="344" y="74" width="82" height="44" rx="4" fill="var(--bg-surface)" stroke="var(--status-success)" stroke-width="1.2"/>
-                            <text x="385" y="93" text-anchor="middle" fill="var(--status-success)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5">github.com</text>
-                            <text x="385" y="109" text-anchor="middle" fill="var(--status-success)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700">&#x2713;</text>
+                            <rect x="334" y="24" width="82" height="44" rx="4" fill="var(--bg-surface)" stroke="var(--status-success)" stroke-width="1.2"/>
+                            <text x="375" y="43" text-anchor="middle" fill="var(--status-success)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5">github.com</text>
+                            <text x="375" y="59" text-anchor="middle" fill="var(--status-success)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700">&#x2713;</text>
                             <!-- Blocked path (lower-right, static with red cross) -->
-                            <line x1="298" y1="160" x2="336" y2="186" stroke="var(--status-error)" stroke-width="1.5" stroke-dasharray="6 4"/>
-                            <polygon points="-7,-4 0,0 -7,4" transform="translate(339,188) rotate(34)" fill="var(--status-error)"/>
+                            <line x1="288" y1="110" x2="326" y2="136" stroke="var(--status-error)" stroke-width="1.5" stroke-dasharray="6 4"/>
+                            <polygon points="-7,-4 0,0 -7,4" transform="translate(329,138) rotate(34)" fill="var(--status-error)"/>
                             <!-- Red cross on blocked path -->
-                            <g transform="translate(317,173)" stroke="var(--status-error)" stroke-width="2.5" stroke-linecap="round">
+                            <g transform="translate(307,123)" stroke="var(--status-error)" stroke-width="2.5" stroke-linecap="round">
                                 <line x1="-6" y1="-6" x2="6" y2="6"/>
                                 <line x1="6" y1="-6" x2="-6" y2="6"/>
                             </g>
                             <!-- Blocked host box -->
-                            <rect x="344" y="168" width="82" height="44" rx="4" fill="var(--bg-surface)" stroke="var(--status-error)" stroke-width="1.2"/>
-                            <text x="385" y="187" text-anchor="middle" fill="var(--status-error)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5">evil.com</text>
-                            <text x="385" y="203" text-anchor="middle" fill="var(--status-error)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700">&#x2717;</text>
+                            <rect x="334" y="118" width="82" height="44" rx="4" fill="var(--bg-surface)" stroke="var(--status-error)" stroke-width="1.2"/>
+                            <text x="375" y="137" text-anchor="middle" fill="var(--status-error)" font-family="ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5">evil.com</text>
+                            <text x="375" y="153" text-anchor="middle" fill="var(--status-error)" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700">&#x2717;</text>
                         </svg>
                     </div>
                     <div class="step-content">
